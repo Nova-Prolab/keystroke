@@ -287,7 +287,7 @@ export default function KeystrokeInsightsPage() {
 
   if (isLoadingScreenVisible) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-background text-foreground p-6 text-center">
+      <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background text-foreground p-6 text-center overflow-hidden">
         <div className="mb-8">
           <Keyboard className="h-28 w-28 text-primary animate-pulse" />
         </div>
@@ -389,7 +389,7 @@ export default function KeystrokeInsightsPage() {
         onClose={() => setIsSettingsDialogOpen(false)}
         currentTheme={theme}
         onThemeChange={handleThemeChange}
-        currentFontSize={fontSize}
+        currentFontSize={currentFontSize}
         onFontSizeChange={handleFontSizeChange}
         showErrorAnalysis={showErrorAnalysis}
         onShowErrorAnalysisChange={handleShowErrorAnalysisChange}
