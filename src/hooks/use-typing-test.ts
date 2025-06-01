@@ -220,8 +220,7 @@ export function useTypingTest() {
       } else if (status === 'correct') {
         className = "text-green-500";
       } else if (status === 'incorrect') {
-        // Applied a more distinct style for incorrect characters
-        className = "text-white bg-red-600 p-0.5 rounded-sm"; 
+        className = "bg-yellow-300 text-black border-2 border-red-700 font-bold";
       }
 
       return { char, className, key: `${char}-${index}` };
