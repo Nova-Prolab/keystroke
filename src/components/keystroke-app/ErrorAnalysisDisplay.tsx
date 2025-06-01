@@ -119,7 +119,7 @@ const ErrorAnalysisDisplay: React.FC<ErrorAnalysisDisplayProps> = ({ errors, sta
                     {t(wpmComparisonKey, { diff: Math.abs(wpmDifference) })}
                   </Badge>
                   <span className="text-xs text-muted-foreground ml-2">
-                    ({t('errorAnalysis.averageIsWPM', { avg: AVERAGE_WPM })})
+                    ({t('errorAnalysis.wpmComparison.averageIsWPM', { avg: AVERAGE_WPM })})
                   </span>
                 </div>
               </div>
@@ -134,7 +134,7 @@ const ErrorAnalysisDisplay: React.FC<ErrorAnalysisDisplayProps> = ({ errors, sta
                     {t(cpmComparisonKey, { diff: Math.abs(cpmDifference) })}
                   </Badge>
                   <span className="text-xs text-muted-foreground ml-2">
-                    ({t('errorAnalysis.averageIsCPM', { avg: AVERAGE_CPM })})
+                    ({t('errorAnalysis.cpmComparison.averageIsCPM', { avg: AVERAGE_CPM })})
                   </span>
                 </div>
               </div>
@@ -205,3 +205,5 @@ const ErrorAnalysisDisplay: React.FC<ErrorAnalysisDisplayProps> = ({ errors, sta
 };
 
 export default ErrorAnalysisDisplay;
+
+    
