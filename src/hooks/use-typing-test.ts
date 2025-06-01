@@ -220,7 +220,8 @@ export function useTypingTest() {
       } else if (status === 'correct') {
         className = "text-green-500";
       } else if (status === 'incorrect') {
-        className = "text-red-500 bg-red-100 dark:bg-red-900";
+        // Applied a more distinct style for incorrect characters
+        className = "text-white bg-red-600 p-0.5 rounded-sm"; 
       }
 
       return { char, className, key: `${char}-${index}` };
@@ -244,3 +245,4 @@ export function useTypingTest() {
     isReady: i18nInitialized && sampleText !== "", // Add a flag to indicate if the hook is ready
   };
 }
+
