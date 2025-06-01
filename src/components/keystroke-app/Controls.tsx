@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
-import { Download, Play, RefreshCcw, Volume2, VolumeX } from 'lucide-react';
+import { Download, Play, RefreshCcw, Settings, Volume2, VolumeX } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import type { TypingStats, Keystroke, ErrorRecord } from '@/hooks/use-typing-test';
 import { exportTypingDataToCSV } from '@/lib/exportUtils';
@@ -23,6 +23,7 @@ interface ControlsProps {
   errors: ErrorRecord[];
   sampleText: string;
   isFinished: boolean;
+  onOpenSettings: () => void;
 }
 
 const Controls: React.FC<ControlsProps> = ({ 
@@ -35,7 +36,8 @@ const Controls: React.FC<ControlsProps> = ({
   keystrokeHistory,
   errors,
   sampleText,
-  isFinished
+  isFinished,
+  onOpenSettings
 }) => {
   const { t } = useI18n();
   const { toast } = useToast();
@@ -50,7 +52,7 @@ const Controls: React.FC<ControlsProps> = ({
       return;
     }
     try {
-      exportTypingDataToCSV(stats, keystrokeHistory, errors, sampleText, t); // Pass t function
+      exportTypingDataToCSV(stats, keystrokeHistory, errors, sampleText, t);
       toast({
         title: t('controls.exportSuccessfulTitle'),
         description: t('controls.exportSuccessfulDesc'),
@@ -67,7 +69,7 @@ const Controls: React.FC<ControlsProps> = ({
 
   return (
     <Card className="shadow-lg bg-card">
-      <CardContent className="p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <CardContent className="p-6 flex flex-col sm:flex-row items-center justify-between gap-4 flex-wrap">
         <div className="flex gap-2">
           {!sessionActive && !isFinished && (
             <Button onClick={onStart} className="bg-primary hover:bg-primary/90 text-primary-foreground">
@@ -96,6 +98,10 @@ const Controls: React.FC<ControlsProps> = ({
 
         <Button onClick={handleExport} variant="secondary">
           <Download className="mr-2 h-5 w-5" /> {t('controls.exportCsv')}
+        </Button>
+
+        <Button onClick={onOpenSettings} variant="outline" size="icon" aria-label={t('controls.settings')}>
+          <Settings className="h-5 w-5" />
         </Button>
       </CardContent>
     </Card>

@@ -20,6 +20,7 @@
     "reset": "Reiniciar",
     "sound": "Sonido",
     "exportCsv": "Exportar CSV",
+    "settings": "Ajustes",
     "noDataToExportTitle": "Sin Datos para Exportar",
     "noDataToExportDesc": "Por favor, completa una sesión de mecanografía para exportar datos.",
     "exportSuccessfulTitle": "Exportación Exitosa",
@@ -82,5 +83,29 @@
   "errorDisplay": {
     "toastTitle": "Error de Mecanografía",
     "toastDescription": "En el carácter {{index}}: Esperado {{expected}}, escribiste {{actual}}."
+  },
+  "settingsDialog": {
+    "title": "Ajustes",
+    "description": "Personaliza tu experiencia en Keystroke Insights.",
+    "appearance": {
+      "title": "Apariencia",
+      "theme": {
+        "label": "Tema",
+        "light": "Claro",
+        "dark": "Oscuro"
+      },
+      "fontSize": {
+        "label": "Tamaño de Fuente",
+        "small": "Pequeño",
+        "normal": "Normal",
+        "large": "Grande"
+      }
+    },
+    "display": {
+      "title": "Opciones de Visualización",
+      "showErrorAnalysis": "Mostrar Análisis de Errores",
+      "showKeystrokeHistory": "Mostrar Registro de Teclas"
+    },
+    "closeButton": "Hecho"
   }
 }

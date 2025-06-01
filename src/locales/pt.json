@@ -20,6 +20,7 @@
     "reset": "Reiniciar",
     "sound": "Som",
     "exportCsv": "Exportar CSV",
+    "settings": "Configurações",
     "noDataToExportTitle": "Sem Dados para Exportar",
     "noDataToExportDesc": "Por favor, complete uma sessão de digitação para exportar dados.",
     "exportSuccessfulTitle": "Exportação Bem-sucedida",
@@ -82,5 +83,29 @@
   "errorDisplay": {
     "toastTitle": "Erro de Digitação",
     "toastDescription": "No caractere {{index}}: Esperado {{expected}}, você digitou {{actual}}."
+  },
+  "settingsDialog": {
+    "title": "Configurações",
+    "description": "Personalize sua experiência no Keystroke Insights.",
+    "appearance": {
+      "title": "Aparência",
+      "theme": {
+        "label": "Tema",
+        "light": "Claro",
+        "dark": "Escuro"
+      },
+      "fontSize": {
+        "label": "Tamanho da Fonte",
+        "small": "Pequeno",
+        "normal": "Normal",
+        "large": "Grande"
+      }
+    },
+    "display": {
+      "title": "Opções de Exibição",
+      "showErrorAnalysis": "Mostrar Análise de Erros",
+      "showKeystrokeHistory": "Mostrar Registro de Teclas"
+    },
+    "closeButton": "Feito"
   }
 }

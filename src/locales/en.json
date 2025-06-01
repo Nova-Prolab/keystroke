@@ -20,6 +20,7 @@
     "reset": "Reset",
     "sound": "Sound",
     "exportCsv": "Export CSV",
+    "settings": "Settings",
     "noDataToExportTitle": "No Data to Export",
     "noDataToExportDesc": "Please complete a typing session to export data.",
     "exportSuccessfulTitle": "Export Successful",
@@ -82,5 +83,29 @@
   "errorDisplay": {
     "toastTitle": "Typing Mistake",
     "toastDescription": "At character {{index}}: Expected {{expected}}, you typed {{actual}}."
+  },
+  "settingsDialog": {
+    "title": "Settings",
+    "description": "Customize your Keystroke Insights experience.",
+    "appearance": {
+      "title": "Appearance",
+      "theme": {
+        "label": "Theme",
+        "light": "Light",
+        "dark": "Dark"
+      },
+      "fontSize": {
+        "label": "Font Size",
+        "small": "Small",
+        "normal": "Normal",
+        "large": "Large"
+      }
+    },
+    "display": {
+      "title": "Display Options",
+      "showErrorAnalysis": "Show Error Analysis",
+      "showKeystrokeHistory": "Show Keystroke Log"
+    },
+    "closeButton": "Done"
   }
 }

@@ -4,6 +4,8 @@
 import type React from 'react';
 import { Textarea } from '@/components/ui/textarea';
 import { useI18n } from '@/contexts/i18nContext';
+import type { FontSize } from '@/app/page';
+import { cn } from '@/lib/utils';
 
 interface TypingInputAreaProps {
   value: string;
@@ -11,17 +13,28 @@ interface TypingInputAreaProps {
   disabled: boolean;
   inputRef: React.RefObject<HTMLTextAreaElement>;
   onFocus?: () => void;
+  fontSize: FontSize;
 }
 
-const TypingInputArea: React.FC<TypingInputAreaProps> = ({ value, onChange, disabled, inputRef, onFocus }) => {
+const TypingInputArea: React.FC<TypingInputAreaProps> = ({ value, onChange, disabled, inputRef, onFocus, fontSize }) => {
   const { t } = useI18n();
+
+  const fontSizeClasses: Record<FontSize, string> = {
+    sm: 'text-md md:text-lg', // Adjusted to match sample display logic a bit closer
+    base: 'text-lg md:text-xl',
+    lg: 'text-xl md:text-2xl',
+  };
+
   return (
     <Textarea
       ref={inputRef}
       value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder={t('typingInputPlaceholder')}
-      className="text-lg p-4 h-32 resize-none focus:ring-accent focus:ring-2 bg-background font-mono"
+      className={cn(
+        "p-4 h-32 resize-none focus:ring-accent focus:ring-2 bg-background font-mono",
+        fontSizeClasses[fontSize]
+      )}
       disabled={disabled}
       aria-label={t('typingInputAriaLabel')}
       onFocus={onFocus}

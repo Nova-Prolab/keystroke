@@ -10,11 +10,14 @@ import StatsDisplay from '@/components/keystroke-app/StatsDisplay';
 import Controls from '@/components/keystroke-app/Controls';
 import ErrorAnalysisDisplay from '@/components/keystroke-app/ErrorAnalysisDisplay';
 import KeystrokeHistoryDisplay from '@/components/keystroke-app/KeystrokeHistoryDisplay';
+import SettingsDialog from '@/components/keystroke-app/SettingsDialog';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Keyboard } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { useI18n } from '@/contexts/i18nContext';
 
+export type Theme = 'light' | 'dark';
+export type FontSize = 'sm' | 'base' | 'lg';
 
 export default function KeystrokeInsightsPage() {
   const { t, isInitialized: i18nReady } = useI18n();
@@ -38,6 +41,13 @@ export default function KeystrokeInsightsPage() {
   const { toast } = useToast();
   const [isMounted, setIsMounted] = useState(false);
 
+  // Settings State
+  const [theme, setTheme] = useState<Theme>('light');
+  const [fontSize, setFontSize] = useState<FontSize>('base');
+  const [showErrorAnalysis, setShowErrorAnalysis] = useState<boolean>(true);
+  const [showKeystrokeHistory, setShowKeystrokeHistory] = useState<boolean>(true);
+  const [isSettingsDialogOpen, setIsSettingsDialogOpen] = useState<boolean>(false);
+
   useEffect(() => {
     setIsMounted(true);
     try {
@@ -45,7 +55,7 @@ export default function KeystrokeInsightsPage() {
       setAudioContext(context);
     } catch (e) {
       console.warn("AudioContext not supported or could not be initialized.", e);
-      if (i18nReady) { // Ensure t is available
+      if (i18nReady) {
         toast({
           title: t('audioWarningTitle'),
           description: t('audioWarningDesc'),
@@ -53,19 +63,64 @@ export default function KeystrokeInsightsPage() {
         });
       }
     }
+
+    // Load settings from localStorage
+    const storedTheme = localStorage.getItem('theme') as Theme | null;
+    if (storedTheme) {
+      setTheme(storedTheme);
+      document.documentElement.classList.toggle('dark', storedTheme === 'dark');
+    } else {
+      // Default to system preference if no theme is stored
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initialTheme = prefersDark ? 'dark' : 'light';
+      setTheme(initialTheme);
+      document.documentElement.classList.toggle('dark', initialTheme === 'dark');
+    }
+
+    const storedFontSize = localStorage.getItem('fontSize') as FontSize | null;
+    if (storedFontSize) setFontSize(storedFontSize);
+
+    const storedShowError = localStorage.getItem('showErrorAnalysis');
+    if (storedShowError !== null) setShowErrorAnalysis(JSON.parse(storedShowError));
+    
+    const storedShowHistory = localStorage.getItem('showKeystrokeHistory');
+    if (storedShowHistory !== null) setShowKeystrokeHistory(JSON.parse(storedShowHistory));
+
     return () => {
       if (audioContext && audioContext.state !== 'closed') {
         audioContext.close().catch(err => console.warn("Failed to close AudioContext:", err));
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18nReady]); // Add t to deps if used directly in effect, or check i18nReady
+  }, [i18nReady]); // Only run once on mount after i18n is ready
 
   useEffect(() => {
     if (i18nReady) {
       document.title = t('pageTitle');
     }
   }, [i18nReady, t]);
+
+  const handleThemeChange = (newTheme: Theme) => {
+    setTheme(newTheme);
+    document.documentElement.classList.toggle('dark', newTheme === 'dark');
+    localStorage.setItem('theme', newTheme);
+  };
+
+  const handleFontSizeChange = (newSize: FontSize) => {
+    setFontSize(newSize);
+    localStorage.setItem('fontSize', newSize);
+  };
+
+  const handleShowErrorAnalysisChange = (show: boolean) => {
+    setShowErrorAnalysis(show);
+    localStorage.setItem('showErrorAnalysis', JSON.stringify(show));
+  };
+
+  const handleShowKeystrokeHistoryChange = (show: boolean) => {
+    setShowKeystrokeHistory(show);
+    localStorage.setItem('showKeystrokeHistory', JSON.stringify(show));
+  };
+
 
   const playKeystrokeSound = useCallback(() => {
     if (soundEnabled && audioContext && audioContext.state === 'running') {
@@ -89,7 +144,7 @@ export default function KeystrokeInsightsPage() {
   }, [soundEnabled, audioContext]);
 
   const handleLocalInputChange = (value: string) => {
-    if (!sampleText) return; // Don't handle input if sampleText isn't loaded
+    if (!sampleText) return;
     handleInputChange(value);
     if (sessionActive || (!sessionActive && value.length > 0 && value.length < sampleText.length)) { 
       playKeystrokeSound();
@@ -145,13 +200,14 @@ export default function KeystrokeInsightsPage() {
                 <CardTitle className="text-2xl font-semibold text-primary">{t('typingChallengeCardTitle')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-                <SampleTextDisplay formattedText={formattedSampleText} />
+                <SampleTextDisplay formattedText={formattedSampleText} fontSize={fontSize} />
                 <TypingInputArea
                   value={typedText}
                   onChange={handleLocalInputChange}
-                  disabled={!!isTestFinished} // Ensure boolean
+                  disabled={!!isTestFinished}
                   inputRef={inputRef}
                   onFocus={handleInputFocus}
+                  fontSize={fontSize}
                 />
             </CardContent>
           </Card>
@@ -168,14 +224,15 @@ export default function KeystrokeInsightsPage() {
             keystrokeHistory={keystrokeHistory}
             errors={errors}
             sampleText={sampleText}
-            isFinished={!!isTestFinished} // Ensure boolean
+            isFinished={!!isTestFinished}
+            onOpenSettings={() => setIsSettingsDialogOpen(true)}
           />
           
-          {(isTestFinished || (errors.length > 0 && !sessionActive && stats.timeElapsed > 0)) && (
+          {showErrorAnalysis && (isTestFinished || (errors.length > 0 && !sessionActive && stats.timeElapsed > 0)) && (
             <ErrorAnalysisDisplay errors={errors} stats={stats} isFinished={!!isTestFinished} />
           )}
 
-          {(isTestFinished || (keystrokeHistory.length > 0 && !sessionActive && stats.timeElapsed > 0)) && (
+          {showKeystrokeHistory && (isTestFinished || (keystrokeHistory.length > 0 && !sessionActive && stats.timeElapsed > 0)) && (
             <KeystrokeHistoryDisplay history={keystrokeHistory} isFinished={!!isTestFinished} />
           )}
           
@@ -184,6 +241,18 @@ export default function KeystrokeInsightsPage() {
             <p>{t('footerText', { year: new Date().getFullYear() })}</p>
         </footer>
       </main>
+      <SettingsDialog
+        isOpen={isSettingsDialogOpen}
+        onClose={() => setIsSettingsDialogOpen(false)}
+        currentTheme={theme}
+        onThemeChange={handleThemeChange}
+        currentFontSize={fontSize}
+        onFontSizeChange={handleFontSizeChange}
+        showErrorAnalysis={showErrorAnalysis}
+        onShowErrorAnalysisChange={handleShowErrorAnalysisChange}
+        showKeystrokeHistory={showKeystrokeHistory}
+        onShowKeystrokeHistoryChange={handleShowKeystrokeHistoryChange}
+      />
     </>
   );
 }
