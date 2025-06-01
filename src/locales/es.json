@@ -21,25 +21,34 @@
     "sound": "Sonido",
     "exportCsv": "Exportar CSV",
     "settings": "Ajustes",
-    "noDataToExportTitle": "Sin Datos para Exportar",
+    "shareImage": "Compartir Resultados",
+    "noDataToExportTitle": "Sin Datos Disponibles",
     "noDataToExportDesc": "Por favor, completa una sesión de mecanografía para exportar datos.",
+    "noDataToShareDesc": "Por favor, completa una sesión de mecanografía para compartir resultados.",
     "exportSuccessfulTitle": "Exportación Exitosa",
-    "exportSuccessfulDesc": "Tus datos de mecanografía han sido exportados como un archivo CSV.",
+    "exportCsvSuccessfulDesc": "Tus datos de mecanografía han sido exportados como un archivo CSV.",
     "exportFailedTitle": "Exportación Fallida",
-    "exportFailedDesc": "Hubo un error al exportar tus datos."
+    "exportFailedDesc": "Hubo un error al exportar tus datos.",
+    "shareImageSuccessfulTitle": "Imagen Lista",
+    "shareImageSuccessfulDesc": "La imagen de tus resultados ha sido descargada.",
+    "shareImageErrorTitle": "Error al Compartir Imagen",
+    "shareImageErrorDescNoCard": "No se pudo encontrar la tarjeta de resultados para capturar.",
+    "shareImageErrorDescGeneral": "Ocurrió un error al generar la imagen."
   },
   "errorAnalysis": {
-    "title": "Análisis de Rendimiento",
-    "completeSessionPrompt": "Completa una sesión de mecanografía para ver tu análisis de rendimiento.",
-    "keyMetricsTitle": "Métricas Clave",
-    "performanceComparisonTitle": "Comparación de Rendimiento",
-    "overallAccuracyTitle": "Precisión General",
-    "specificErrorsTitle": "Errores Detallados",
+    "title": "Informe de Rendimiento",
+    "sessionReportSubtitle": "Un desglose detallado de tu sesión de mecanografía.",
+    "completeSessionPrompt": "Completa una sesión de mecanografía para ver tu informe de rendimiento.",
+    "keyMetricsTitle": "Resumen de Métricas Clave",
+    "performanceComparisonTitle": "Comparación de Velocidad (vs. Promedio)",
+    "accuracyBreakdownTitle": "Desglose de Precisión",
+    "specificErrorsTitle": "Registro Detallado de Errores",
     "errorDetail": "Error en el carácter {{index}}: Escribiste {{actual}} en lugar de {{expected}}.",
     "spaceChar": "'espacio'",
     "mostFrequentErrors": "Patrones de Error Más Frecuentes",
     "frequency": "Frecuencia",
-    "noErrors": "¡Impecable! Sin errores.",
+    "noErrors": "¡Rendimiento Impecable!",
+    "perfectScore": "Felicidades por una puntuación perfecta sin errores.",
     "wpmComparison": {
       "yourWpm": "Tus PPM: {{wpm}}",
       "averageIsWPM": "Prom: {{avg}} PPM"
@@ -53,10 +62,24 @@
       "lower": "{{diff}} más bajo",
       "onPar": "A la par"
     },
-    "errorCount": "Errores",
+    "errorCount": "Errores Totales",
+    "errorCountDescription": "Número de caracteres incorrectos.",
     "correctCharacters": "Chars Correctos",
-    "totalSampleCharacters": "Total Chars (Ejemplo)",
-    "secondsUnit": "s"
+    "correctCharsDescription": "Caracteres tecleados que coinciden.",
+    "totalSampleCharacters": "Longitud Muestra",
+    "totalSampleCharsDescription": "Total de caracteres en el texto de muestra.",
+    "secondsUnit": "s",
+    "errorRate": "Tasa de Errores",
+    "errorRateDescription": "Porcentaje de errores en la muestra.",
+    "wordsTyped": "Palabras Tecleadas",
+    "wordsTypedDescription": "Total de palabras ingresadas.",
+    "charsTyped": "Chars Tecleados",
+    "charsTypedDescription": "Total de caracteres ingresados.",
+    "wpmDescription": "Palabras Por Minuto.",
+    "cpmDescription": "Caracteres Por Minuto.",
+    "accuracyDescription": "Porcentaje de caracteres correctos.",
+    "timeDescription": "Tiempo total de la prueba.",
+    "reportGeneratedHint": "Informe generado el {{date}}"
   },
   "keystrokeLog": {
     "title": "Registro de Teclas",
@@ -66,9 +89,9 @@
     "statusHeader": "Estado",
     "timestampHeader": "Marca de Tiempo",
     "statusValues": {
-        "correct": "correcto",
-        "incorrect": "incorrecto",
-        "corrected": "corregido"
+        "correct": "Correcto",
+        "incorrect": "Incorrecto",
+        "corrected": "Corregido (con retroceso)"
     },
     "noKeystrokes": "Aún no se han registrado pulsaciones de teclas."
   },
@@ -78,23 +101,36 @@
   "audioErrorTitle": "Error de Audio",
   "audioErrorDesc": "No se pudo habilitar el sonido. Haz clic en el área de entrada e inténtalo de nuevo.",
   "csvHeaders": {
-    "generalStats": "Estadísticas Generales",
-    "reportGeneratedOn": "Informe Generado El",
-    "wpm": "PPM",
-    "cpm": "CPM",
-    "wps": "PPS",
-    "accuracy": "Precisión",
-    "timeElapsed": "TiempoTranscurridoSegundos",
-    "sampleText": "TextoDeMuestra",
-    "keystrokeHistory": "Historial de Pulsaciones",
-    "char": "CaracterEsperado",
-    "inputChar": "CaracterTecleado",
-    "status": "Estado",
-    "timestamp": "MarcaDeTiempo",
-    "errors": "Errores",
-    "expected": "Esperado",
-    "actual": "Real",
-    "index": "Índice"
+    "reportTitle": "INFORME DE KEYSTROKE INSIGHTS",
+    "noDataAvailable": "No hay datos disponibles para esta sección.",
+    "config": {
+      "title": "CONFIGURACIÓN DE LA PRUEBA",
+      "reportGeneratedOn": "Informe Generado El",
+      "language": "Idioma",
+      "theme": "Tema",
+      "fontSize": "Tamaño de Fuente",
+      "onScreenKeyboard": "Teclado en Pantalla Usado",
+      "oskUsed": {
+        "yes": "Sí",
+        "no": "No"
+      }
+    },
+    "sessionSummary": {
+      "title": "RESUMEN DE LA SESIÓN"
+    },
+    "sampleTextFullTitle": "TEXTO DE MUESTRA (COMPLETO)",
+    "sampleTextFull": "Texto de Muestra Completo",
+    "typedTextFullTitle": "TEXTO TECLEADO (COMPLETO)",
+    "typedTextFull": "Texto Tecleado Completo",
+    "keystrokeHistory": {
+      "title": "HISTORIAL DE PULSACIONES"
+    },
+    "errors": {
+      "title": "ERRORES DETALLADOS",
+      "index": "Índice",
+      "expected": "Carácter Esperado",
+      "actual": "Carácter Real"
+    }
   },
   "localeForDate": "es-ES",
   "errorDisplay": {
@@ -112,7 +148,7 @@
         "dark": "Oscuro"
       },
       "fontSize": {
-        "label": "Tamaño de Fuente",
+        "label": "Tamaño de Fuente (Muestra/Entrada)",
         "small": "Pequeño",
         "normal": "Normal",
         "large": "Grande"
@@ -124,7 +160,7 @@
     },
     "display": {
       "title": "Opciones de Visualización",
-      "showErrorAnalysis": "Mostrar Análisis de Rendimiento",
+      "showErrorAnalysis": "Mostrar Informe de Rendimiento",
       "showKeystrokeHistory": "Mostrar Registro de Teclas"
     },
     "closeButton": "Hecho"

@@ -4,6 +4,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useI18n } from '@/contexts/i18nContext';
 
+// Expanded sample texts for each language
 const ALL_SAMPLE_TEXTS: Record<string, string[]> = {
   en: [
     "The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs. How vexingly quick daft zebras jump!",
@@ -18,14 +19,19 @@ const ALL_SAMPLE_TEXTS: Record<string, string[]> = {
     "Keep your face always toward the sunshine, and shadows will fall behind you. You will face many defeats in life, but never let yourself be defeated.",
     "The only source of knowledge is experience. Imagination is more important than knowledge. Knowledge is limited. Imagination encircles the world.",
     "Strive not to be a success, but rather to be of value. Two things are infinite: the universe and human stupidity; and I'm not sure about the universe.",
-    "If you want to live a happy life, tie it to a goal, not to people or things. The mind is everything. What you think you become.",
+    "If you want to live a life happy, tie it to a goal, not to people or things. The mind is everything. What you think you become.",
     "Your time is limited, so don't waste it living someone else's life. Don't be trapped by dogma – which is living with the results of other people's thinking.",
     "The best way to predict the future is to create it. People who are crazy enough to think they can change the world are the ones who do.",
     "An unexamined life is not worth living. Whereof one cannot speak, thereof one must be silent. The limits of my language mean the limits of my world.",
     "Happiness is not something readymade. It comes from your own actions. The purpose of our lives is to be happy. Get busy living or get busy dying.",
     "You only live once, but if you do it right, once is enough. To live is the rarest thing in the world. Most people exist, that is all.",
     "Good friends, good books, and a sleepy conscience: this is the ideal life. The truth is rarely pure and never simple.",
-    "It is never too late to be what you might have been. Do what you can, with what you have, where you are. Be the change that you wish to see in the world."
+    "It is never too late to be what you might have been. Do what you can, with what you have, where you are. Be the change that you wish to see in the world.",
+    "The only thing we have to fear is fear itself. We hold these truths to be self-evident, that all men are created equal.",
+    "Ask not what your country can do for you – ask what you can do for your country. Government of the people, by the people, for the people, shall not perish from the Earth.",
+    "I have a dream that my four little children will one day live in a nation where they will not be judged by the color of their skin but by the content of their character.",
+    "Stay hungry. Stay foolish. Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work.",
+    "Innovation distinguishes between a leader and a follower. Sometimes when you innovate, you make mistakes. It is best to admit them quickly, and get on with improving your other innovations."
   ],
   es: [
     "El veloz murciélago hindú comía feliz cardillo y kiwi. La cigüeña tocaba el saxofón detrás del palenque de paja. ¡Qué fácil es escribir en español ahora!",
@@ -47,7 +53,12 @@ const ALL_SAMPLE_TEXTS: Record<string, string[]> = {
     "La felicidad no es algo ya hecho. Viene de tus propias acciones. El propósito de nuestras vidas es ser felices. Ocúpate viviendo o ocúpate muriendo.",
     "Solo se vive una vez, pero si lo haces bien, una vez es suficiente. Vivir es la cosa más rara del mundo. La mayoría de la gente existe, eso es todo.",
     "Buenos amigos, buenos libros y una conciencia tranquila: esta es la vida ideal. La verdad rara vez es pura y nunca simple.",
-    "Nunca es demasiado tarde para ser lo que podrías haber sido. Haz lo que puedas, con lo que tengas, donde estés. Sé el cambio que deseas ver en el mundo."
+    "Nunca es demasiado tarde para ser lo que podrías haber sido. Haz lo que puedas, con lo que tengas, donde estés. Sé el cambio que deseas ver en el mundo.",
+    "Lo único que debemos temer es al propio temor. Sostenemos como evidentes estas verdades: que todos los hombres son creados iguales.",
+    "No preguntes qué puede hacer tu país por ti, pregunta qué puedes hacer tú por tu país. El gobierno del pueblo, por el pueblo y para el pueblo, no desaparecerá de la faz de la Tierra.",
+    "Tengo un sueño: que mis cuatro hijos pequeños vivirán un día en una nación donde no serán juzgados por el color de su piel sino por el contenido de su carácter.",
+    "Sigue hambriento. Sigue alocado. Tu trabajo va a llenar gran parte de tu vida, y la única forma de estar realmente satisfecho es hacer lo que crees que es un gran trabajo.",
+    "La innovación distingue a un líder de un seguidor. A veces, cuando innovas, cometes errores. Es mejor admitirlos rápidamente y seguir mejorando tus otras innovaciones."
   ],
   pt: [
     "A rápida raposa marrom salta sobre o cão preguiçoso. Leve uísque Fagundes para casa hoje à noite. Zebras caolhas de Java querem passar num pequeno túnel.",
@@ -69,7 +80,12 @@ const ALL_SAMPLE_TEXTS: Record<string, string[]> = {
     "A felicidade não é algo pronto. Ela vem de suas próprias ações. O propósito de nossas vidas é ser feliz. Ocupe-se vivendo ou ocupe-se morrendo.",
     "Você só vive uma vez, mas se fizer direito, uma vez é o suficiente. Viver é a coisa mais rara do mundo. A maioria das pessoas existe, isso é tudo.",
     "Bons amigos, bons livros e uma consciência sonolenta: esta é a vida ideal. A verdade raramente é pura e nunca simples.",
-    "Nunca é tarde demais para ser o que você poderia ter sido. Faça o que puder, com o que você tem, onde você está. Seja a mudança que você deseja ver no mundo."
+    "Nunca é tarde demais para ser o que você poderia ter sido. Faça o que puder, com o que você tem, onde você está. Seja a mudança que você deseja ver no mundo.",
+    "A única coisa que devemos temer é o próprio medo. Consideramos estas verdades como autoevidentes, que todos os homens são criados iguais.",
+    "Não pergunte o que seu país pode fazer por você – pergunte o que você pode fazer por seu país. O governo do povo, pelo povo, para o povo, não perecerá da Terra.",
+    "Eu tenho um sonho de que meus quatro filhos pequenos um dia viverão em uma nação onde não serão julgados pela cor de sua pele, mas pelo conteúdo de seu caráter.",
+    "Continue faminto. Continue tolo. Seu trabalho vai preencher uma grande parte da sua vida, e a única maneira de estar verdadeiramente satisfeito é fazer o que você acredita ser um ótimo trabalho.",
+    "A inovação distingue um líder de um seguidor. Às vezes, quando você inova, comete erros. É melhor admiti-los rapidamente e continuar melhorando suas outras inovações."
   ],
 };
 
@@ -90,9 +106,13 @@ export type ErrorRecord = {
 export type TypingStats = {
   wpm: number;
   cpm: number;
-  wps: number;
   accuracy: number;
   timeElapsed: number; // in seconds
+  errorCount: number;
+  wordsTyped: number;
+  charsTyped: number;
+  correctChars: number;
+  errorRate: number;
 };
 
 export type FormattedCharacter = {
@@ -108,6 +128,18 @@ const getNewSampleText = (locale: string): string => {
   return textsForLocale[Math.floor(Math.random() * textsForLocale.length)];
 };
 
+const initialStats: TypingStats = {
+  wpm: 0,
+  cpm: 0,
+  accuracy: 100,
+  timeElapsed: 0,
+  errorCount: 0,
+  wordsTyped: 0,
+  charsTyped: 0,
+  correctChars: 0,
+  errorRate: 0,
+};
+
 export function useTypingTest() {
   const { locale, isInitialized: i18nInitialized } = useI18n();
   
@@ -115,9 +147,9 @@ export function useTypingTest() {
   const [typedText, setTypedText] = useState<string>("");
   const [sessionActive, setSessionActive] = useState<boolean>(false);
   const [startTime, setStartTime] = useState<number | null>(null);
-  const [endTime, setEndTimeState] = useState<number | null>(null); // Renamed to avoid conflict
+  const [endTime, setEndTimeState] = useState<number | null>(null);
   
-  const [stats, setStats] = useState<TypingStats>({ wpm: 0, cpm: 0, wps: 0, accuracy: 100, timeElapsed: 0 });
+  const [stats, setStats] = useState<TypingStats>(initialStats);
   const [keystrokeHistory, setKeystrokeHistory] = useState<Keystroke[]>([]);
   const [errors, setErrors] = useState<ErrorRecord[]>([]);
 
@@ -135,7 +167,7 @@ export function useTypingTest() {
     setTypedText("");
     setStartTime(null);
     setEndTimeState(null);
-    setStats({ wpm: 0, cpm: 0, wps: 0, accuracy: 100, timeElapsed: 0 });
+    setStats(initialStats);
     setKeystrokeHistory([]);
     setErrors([]);
     if (i18nInitialized) {
@@ -165,46 +197,75 @@ export function useTypingTest() {
       const timeElapsedSeconds = (now - startTime) / 1000;
       if (timeElapsedSeconds <= 0) return;
 
-      let correctChars = 0;
+      let currentCorrectChars = 0;
       for (let i = 0; i < typedText.length && i < sampleText.length; i++) {
         if (typedText[i] === sampleText[i]) {
-          correctChars++;
+          currentCorrectChars++;
         }
       }
       
-      const cpm = Math.round((correctChars / timeElapsedSeconds) * 60) || 0;
-      const wpm = Math.round(cpm / 5) || 0; 
-      const wps = Math.round(wpm / 60) || 0;
-      const accuracy = typedText.length > 0 ? Math.round((correctChars / typedText.length) * 100) : 100;
+      const currentCharsTyped = typedText.length;
+      const currentWordsTyped = typedText.split(' ').filter(Boolean).length;
+      const currentCpm = Math.round((currentCorrectChars / timeElapsedSeconds) * 60) || 0;
+      const currentWpm = Math.round(currentCpm / 5) || 0; 
+      const currentAccuracy = currentCharsTyped > 0 ? Math.round((currentCorrectChars / currentCharsTyped) * 100) : 100;
+      const currentErrorCount = errors.length;
+      const currentErrorRate = sampleText.length > 0 ? parseFloat(((currentErrorCount / sampleText.length) * 100).toFixed(2)) : 0;
 
-      setStats({ wpm, cpm, wps, accuracy, timeElapsed: parseFloat(timeElapsedSeconds.toFixed(1)) });
+
+      setStats({ 
+        wpm: currentWpm, 
+        cpm: currentCpm, 
+        accuracy: currentAccuracy, 
+        timeElapsed: parseFloat(timeElapsedSeconds.toFixed(1)),
+        errorCount: currentErrorCount,
+        wordsTyped: currentWordsTyped,
+        charsTyped: currentCharsTyped,
+        correctChars: currentCorrectChars,
+        errorRate: currentErrorRate,
+      });
     };
 
-    if (typedText.length === sampleText.length && !endTime) {
+    if (typedText.length >= sampleText.length && !endTime) { // Check >= in case of overtyping (if allowed)
         const finalEndTime = Date.now();
         setEndTimeState(finalEndTime);
-        setSessionActive(false);
+        setSessionActive(false); 
+        
+        // Perform final calculation immediately
         const timeElapsedSeconds = (finalEndTime - startTime) / 1000;
-        if (timeElapsedSeconds > 0) {
-            let correctChars = 0;
-            for (let i = 0; i < typedText.length && i < sampleText.length; i++) {
-                if (typedText[i] === sampleText[i]) {
-                correctChars++;
-                }
+        let finalCorrectChars = 0;
+        const finalTypedLength = Math.min(typedText.length, sampleText.length); // Consider only up to sample text length for final accuracy
+        for (let i = 0; i < finalTypedLength; i++) {
+            if (typedText[i] === sampleText[i]) {
+            finalCorrectChars++;
             }
-            const cpm = Math.round((correctChars / timeElapsedSeconds) * 60) || 0;
-            const wpm = Math.round(cpm / 5) || 0;
-            const wps = Math.round(wpm / 60) || 0;
-            const accuracy = typedText.length > 0 ? Math.round((correctChars / typedText.length) * 100) : 100;
-            setStats({ wpm, cpm, wps, accuracy, timeElapsed: parseFloat(timeElapsedSeconds.toFixed(1)) });
         }
+        const finalCharsTyped = typedText.length;
+        const finalWordsTyped = typedText.split(' ').filter(Boolean).length;
+        const finalCpm = timeElapsedSeconds > 0 ? Math.round((finalCorrectChars / timeElapsedSeconds) * 60) : 0;
+        const finalWpm = Math.round(finalCpm / 5) || 0;
+        const finalAccuracy = finalCharsTyped > 0 ? Math.round((finalCorrectChars / finalCharsTyped) * 100) : 100;
+        const finalErrorCount = errors.length;
+        const finalErrorRate = sampleText.length > 0 ? parseFloat(((finalErrorCount / sampleText.length) * 100).toFixed(2)) : 0;
+
+        setStats({
+            wpm: finalWpm,
+            cpm: finalCpm,
+            accuracy: finalAccuracy,
+            timeElapsed: parseFloat(timeElapsedSeconds.toFixed(1)),
+            errorCount: finalErrorCount,
+            wordsTyped: finalWordsTyped,
+            charsTyped: finalCharsTyped,
+            correctChars: finalCorrectChars,
+            errorRate: finalErrorRate,
+        });
         return; 
     }
 
-    const intervalId = setInterval(calculateStats, 500);
+    const intervalId = setInterval(calculateStats, 200); // Update stats more frequently
     
     return () => clearInterval(intervalId);
-  }, [sessionActive, startTime, typedText, sampleText, endTime]);
+  }, [sessionActive, startTime, typedText, sampleText, endTime, errors]);
 
   const handleInputChange = (currentTypedText: string) => {
     if (endTime || !sampleText) return; 
@@ -214,11 +275,13 @@ export function useTypingTest() {
       setStartTime(Date.now());
     }
     
+    const previousTypedTextLength = typedText.length;
     setTypedText(currentTypedText);
 
     const currentIndex = currentTypedText.length - 1;
+    const isBackspace = currentTypedText.length < previousTypedTextLength;
 
-    if (currentIndex >= 0 && currentIndex < sampleText.length) {
+    if (!isBackspace && currentIndex >= 0 && currentIndex < sampleText.length) {
       const expectedChar = sampleText[currentIndex];
       const typedChar = currentTypedText[currentIndex];
       const isCorrect = typedChar === expectedChar;
@@ -230,32 +293,37 @@ export function useTypingTest() {
         status: isCorrect ? 'correct' : 'incorrect',
       };
       
-      if (currentTypedText.length > keystrokeHistory.length) {
-        setKeystrokeHistory(prev => [...prev, newKeystroke]);
-      }
-
+      setKeystrokeHistory(prev => [...prev, newKeystroke]);
 
       if (!isCorrect) {
+        // Add error only if it's a new character being typed, not on backspace
+        // And ensure we don't add duplicate errors for the same index if user types multiple wrong chars for same spot
         setErrors(prevErrors => {
-          const existingErrorIndex = prevErrors.findIndex(err => err.index === currentIndex);
-          if (existingErrorIndex !== -1) {
-            if (prevErrors[existingErrorIndex].actual !== typedChar) {
-              const updatedErrors = [...prevErrors];
-              updatedErrors[existingErrorIndex] = { expected: expectedChar, actual: typedChar, index: currentIndex };
-              return updatedErrors;
+          const existingErrorAtPosition = prevErrors.find(err => err.index === currentIndex);
+          if (existingErrorAtPosition) { // If error exists, update it
+            if (existingErrorAtPosition.actual !== typedChar) {
+              return prevErrors.map(err => err.index === currentIndex ? { expected: expectedChar, actual: typedChar, index: currentIndex } : err);
             }
-            return prevErrors;
+            return prevErrors; // No change if actual char is the same
           }
           return [...prevErrors, { expected: expectedChar, actual: typedChar, index: currentIndex }];
         });
       } else {
+        // If typed correctly, remove any existing error at this position
         setErrors(prevErrors => prevErrors.filter(err => err.index !== currentIndex));
       }
-    } else if (currentIndex >= sampleText.length -1 ) { 
-      if (currentTypedText.length === sampleText.length && !endTime) {
-        setEndTimeState(Date.now());
-        setSessionActive(false);
-      }
+    } else if (isBackspace) {
+        // When backspacing, we might be "uncovering" a character that was previously typed over.
+        // The visual formatting in getFormattedSampleText handles this by re-evaluating against current typedText.
+        // We might remove an error if the character *before* the backspaced one was also an error and is now "revealed"
+        // but it's simpler to let the stats recalculation handle this.
+        // We can remove the error at the new currentTypedText.length if one exists
+        setErrors(prevErrors => prevErrors.filter(err => err.index !== currentTypedText.length));
+    }
+    
+    if (currentTypedText.length >= sampleText.length && !endTime) { // Check >=
+      setEndTimeState(Date.now());
+      setSessionActive(false);
     }
   };
   
@@ -273,23 +341,23 @@ export function useTypingTest() {
       }
       
       let className = "text-muted-foreground"; 
-      if (index === typedText.length && sessionActive) {
+      if (index === typedText.length && sessionActive && !endTime) {
         className = "text-foreground animate-pulse border-b-2 border-accent";
       } else if (status === 'correct') {
-        className = "text-green-600 dark:text-green-400 font-medium";
+        className = "text-green-600 dark:text-green-400";
       } else if (status === 'incorrect') {
-        className = "text-red-600 dark:text-red-500 font-semibold underline decoration-red-500 underline-offset-2 cursor-pointer";
+        className = "text-red-600 dark:text-red-500 font-semibold underline decoration-red-600/70 underline-offset-2 cursor-pointer";
       }
 
       return { 
         char, 
         className, 
-        key: `${char}-${index}-${status}`, 
+        key: `${char}-${index}-${status}-${typedText[index] || 'empty'}`, // Make key more unique for re-renders
         actualChar: actualCharValue,
         originalIndex: index 
       };
     });
-  }, [sampleText, typedText, sessionActive]);
+  }, [sampleText, typedText, sessionActive, endTime]);
 
 
   return {
@@ -306,6 +374,6 @@ export function useTypingTest() {
     formattedSampleText: getFormattedSampleText(),
     timeElapsed: stats.timeElapsed,
     isReady: i18nInitialized && sampleText !== "",
-    endTime, // Expose endTime
+    endTime,
   };
 }

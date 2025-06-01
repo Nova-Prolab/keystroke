@@ -2,7 +2,7 @@
 "use client";
 
 import type React from 'react';
-import { useState, useEffect, useCallback }from 'react';
+import { useState, useEffect, useCallback, useRef }from 'react';
 import { useTypingTest } from '@/hooks/use-typing-test';
 import SampleTextDisplay from '@/components/keystroke-app/SampleTextDisplay';
 import TypingInputArea from '@/components/keystroke-app/TypingInputArea';
@@ -16,12 +16,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Keyboard } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { useI18n } from '@/contexts/i18nContext';
+import { exportTypingDataToCSV, exportResultsAsImage } from '@/lib/exportUtils';
 
 export type Theme = 'light' | 'dark';
 export type FontSize = 'sm' | 'base' | 'lg';
 
 export default function KeystrokeInsightsPage() {
-  const { t, isInitialized: i18nReady } = useI18n();
+  const { locale, t, isInitialized: i18nReady } = useI18n();
   const {
     sampleText,
     typedText,
@@ -51,6 +52,8 @@ export default function KeystrokeInsightsPage() {
   const [useOnScreenKeyboard, setUseOnScreenKeyboard] = useState<boolean>(false);
   const [isSettingsDialogOpen, setIsSettingsDialogOpen] = useState<boolean>(false);
 
+  const analysisCardRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     setIsMounted(true);
     try {
@@ -72,8 +75,9 @@ export default function KeystrokeInsightsPage() {
       setTheme(storedTheme);
       document.documentElement.classList.toggle('dark', storedTheme === 'dark');
     } else {
-      setTheme('light');
+      setTheme('light'); // Default to light theme
       document.documentElement.classList.toggle('dark', false);
+      localStorage.setItem('theme', 'light');
     }
 
     const storedFontSize = localStorage.getItem('fontSize') as FontSize | null;
@@ -184,10 +188,9 @@ export default function KeystrokeInsightsPage() {
 
   // On-Screen Keyboard Handlers
   const handleOSKChar = (char: string) => {
-    if (endTime || !sampleText || (typedText.length >= sampleText.length)) return; // endTime check
-    if (!sessionActive && typedText.length === 0 && char.length > 0) { // Auto-start test on first OSK char input
-      startTest(); // This resets typedText, so we need to pass the char to the next input change
-      // Small delay to allow startTest to reset typedText before processing the first char
+    if (endTime || !sampleText || (typedText.length >= sampleText.length)) return; 
+    if (!sessionActive && typedText.length === 0 && char.length > 0) { 
+      startTest(); 
       setTimeout(() => localHandleInputChange(char), 0);
       return;
     }
@@ -196,14 +199,14 @@ export default function KeystrokeInsightsPage() {
   };
 
   const handleOSKBackspace = () => {
-    if (endTime || !sampleText || typedText.length === 0) return; // endTime check
+    if (endTime || !sampleText || typedText.length === 0) return; 
     const newTypedText = typedText.slice(0, -1);
     localHandleInputChange(newTypedText);
   };
 
   const handleOSKSpace = () => {
-    if (endTime || !sampleText || (typedText.length >= sampleText.length)) return; // endTime check
-     if (!sessionActive && typedText.length === 0) { // Auto-start test on first OSK space input
+    if (endTime || !sampleText || (typedText.length >= sampleText.length)) return; 
+     if (!sessionActive && typedText.length === 0) { 
       startTest();
       setTimeout(() => localHandleInputChange(' '), 0);
       return;
@@ -212,7 +215,67 @@ export default function KeystrokeInsightsPage() {
     localHandleInputChange(newTypedText);
   };
 
-  const isTestFinished = !!endTime; // Use endTime to reliably determine if test is finished
+  const handleExportCSV = () => {
+     if (stats.timeElapsed === 0 && keystrokeHistory.length === 0 && errors.length === 0) {
+      toast({
+        title: t('controls.noDataToExportTitle'),
+        description: t('controls.noDataToExportDesc'),
+        variant: "destructive",
+      });
+      return;
+    }
+    try {
+      const configData = { locale, theme, fontSize, useOnScreenKeyboard };
+      exportTypingDataToCSV(stats, keystrokeHistory, errors, sampleText, typedText, configData, t);
+      toast({
+        title: t('controls.exportSuccessfulTitle'),
+        description: t('controls.exportCsvSuccessfulDesc'),
+      });
+    } catch (error) {
+      toast({
+        title: t('controls.exportFailedTitle'),
+        description: t('controls.exportFailedDesc'),
+        variant: "destructive",
+      });
+      console.error("CSV Export failed:", error);
+    }
+  };
+
+  const handleShareImage = async () => {
+    if (!analysisCardRef.current) {
+      toast({
+        title: t('controls.shareImageErrorTitle'),
+        description: t('controls.shareImageErrorDescNoCard'),
+        variant: "destructive",
+      });
+      return;
+    }
+    if (stats.timeElapsed === 0 && keystrokeHistory.length === 0 && errors.length === 0) {
+      toast({
+        title: t('controls.noDataToExportTitle'),
+        description: t('controls.noDataToShareDesc'),
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      await exportResultsAsImage(analysisCardRef.current, `KeystrokeInsights_Results_${new Date().toISOString().split('T')[0]}.png`);
+      toast({
+        title: t('controls.shareImageSuccessfulTitle'),
+        description: t('controls.shareImageSuccessfulDesc'),
+      });
+    } catch (error) {
+       toast({
+        title: t('controls.shareImageErrorTitle'),
+        description: t('controls.shareImageErrorDescGeneral'),
+        variant: "destructive",
+      });
+      console.error("Image Share failed:", error);
+    }
+  };
+
+  const isTestFinished = !!endTime; 
 
   if (!isMounted || !i18nReady || !typingTestReady || !sampleText) {
     return (
@@ -243,8 +306,8 @@ export default function KeystrokeInsightsPage() {
                 <TypingInputArea
                   value={typedText}
                   onChange={localHandleInputChange}
-                  disabled={isTestFinished || (useOnScreenKeyboard && sessionActive)}
-                  readOnly={useOnScreenKeyboard}
+                  disabled={isTestFinished || (useOnScreenKeyboard && sessionActive && !isTestFinished)}
+                  readOnly={useOnScreenKeyboard && !isTestFinished}
                   inputRef={inputRef}
                   onFocus={handleInputFocus}
                   fontSize={fontSize}
@@ -267,16 +330,22 @@ export default function KeystrokeInsightsPage() {
             sessionActive={sessionActive}
             soundEnabled={soundEnabled}
             onSoundToggle={handleSoundToggle}
-            stats={stats}
-            keystrokeHistory={keystrokeHistory}
-            errors={errors}
-            sampleText={sampleText}
             isFinished={isTestFinished}
             onOpenSettings={() => setIsSettingsDialogOpen(true)}
+            onExportCSV={handleExportCSV}
+            onShareImage={handleShareImage}
+            canShareOrExport={isTestFinished || (stats.timeElapsed > 0 && !sessionActive)}
           />
 
-          {showErrorAnalysis && (isTestFinished || (errors.length > 0 && !sessionActive && stats.timeElapsed > 0)) && (
-            <ErrorAnalysisDisplay errors={errors} stats={stats} isFinished={isTestFinished} sampleText={sampleText} />
+          {showErrorAnalysis && (isTestFinished || (stats.errorCount > 0 && !sessionActive && stats.timeElapsed > 0)) && (
+            <ErrorAnalysisDisplay 
+              errors={errors} 
+              stats={stats} 
+              isFinished={isTestFinished} 
+              sampleText={sampleText} 
+              typedText={typedText}
+              analysisCardRef={analysisCardRef}
+            />
           )}
 
           {showKeystrokeHistory && (isTestFinished || (keystrokeHistory.length > 0 && !sessionActive && stats.timeElapsed > 0)) && (

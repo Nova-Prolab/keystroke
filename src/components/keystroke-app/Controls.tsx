@@ -6,10 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
-import { Download, Play, RefreshCcw, Settings, Volume2, VolumeX } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-import type { TypingStats, Keystroke, ErrorRecord } from '@/hooks/use-typing-test';
-import { exportTypingDataToCSV } from '@/lib/exportUtils';
+import { Download, Play, RefreshCcw, Settings, Volume2, VolumeX, Share2 } from 'lucide-react';
 import { useI18n } from '@/contexts/i18nContext';
 
 interface ControlsProps {
@@ -18,12 +15,11 @@ interface ControlsProps {
   sessionActive: boolean;
   soundEnabled: boolean;
   onSoundToggle: (enabled: boolean) => void;
-  stats: TypingStats;
-  keystrokeHistory: Keystroke[];
-  errors: ErrorRecord[];
-  sampleText: string;
   isFinished: boolean;
   onOpenSettings: () => void;
+  onExportCSV: () => void;
+  onShareImage: () => void;
+  canShareOrExport: boolean;
 }
 
 const Controls: React.FC<ControlsProps> = ({ 
@@ -32,40 +28,13 @@ const Controls: React.FC<ControlsProps> = ({
   sessionActive,
   soundEnabled,
   onSoundToggle,
-  stats,
-  keystrokeHistory,
-  errors,
-  sampleText,
   isFinished,
-  onOpenSettings
+  onOpenSettings,
+  onExportCSV,
+  onShareImage,
+  canShareOrExport
 }) => {
   const { t } = useI18n();
-  const { toast } = useToast();
-
-  const handleExport = () => {
-    if (keystrokeHistory.length === 0 && errors.length === 0 && stats.wpm === 0) {
-      toast({
-        title: t('controls.noDataToExportTitle'),
-        description: t('controls.noDataToExportDesc'),
-        variant: "destructive",
-      });
-      return;
-    }
-    try {
-      exportTypingDataToCSV(stats, keystrokeHistory, errors, sampleText, t);
-      toast({
-        title: t('controls.exportSuccessfulTitle'),
-        description: t('controls.exportSuccessfulDesc'),
-      });
-    } catch (error) {
-      toast({
-        title: t('controls.exportFailedTitle'),
-        description: t('controls.exportFailedDesc'),
-        variant: "destructive",
-      });
-      console.error("Export failed:", error);
-    }
-  };
 
   return (
     <Card className="shadow-lg bg-card">
@@ -96,8 +65,12 @@ const Controls: React.FC<ControlsProps> = ({
           </Label>
         </div>
 
-        <Button onClick={handleExport} variant="secondary">
+        <Button onClick={onExportCSV} variant="secondary" disabled={!canShareOrExport}>
           <Download className="mr-2 h-5 w-5" /> {t('controls.exportCsv')}
+        </Button>
+
+        <Button onClick={onShareImage} variant="secondary" disabled={!canShareOrExport}>
+          <Share2 className="mr-2 h-5 w-5" /> {t('controls.shareImage')}
         </Button>
 
         <Button onClick={onOpenSettings} variant="outline" size="icon" aria-label={t('controls.settings')}>

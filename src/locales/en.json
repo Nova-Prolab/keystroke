@@ -21,25 +21,34 @@
     "sound": "Sound",
     "exportCsv": "Export CSV",
     "settings": "Settings",
-    "noDataToExportTitle": "No Data to Export",
+    "shareImage": "Share Results",
+    "noDataToExportTitle": "No Data Available",
     "noDataToExportDesc": "Please complete a typing session to export data.",
+    "noDataToShareDesc": "Please complete a typing session to share results.",
     "exportSuccessfulTitle": "Export Successful",
-    "exportSuccessfulDesc": "Your typing data has been exported as a CSV file.",
+    "exportCsvSuccessfulDesc": "Your typing data has been exported as a CSV file.",
     "exportFailedTitle": "Export Failed",
-    "exportFailedDesc": "There was an error exporting your data."
+    "exportFailedDesc": "There was an error exporting your data.",
+    "shareImageSuccessfulTitle": "Image Ready",
+    "shareImageSuccessfulDesc": "Your results image has been downloaded.",
+    "shareImageErrorTitle": "Image Share Failed",
+    "shareImageErrorDescNoCard": "Could not find the results card to capture.",
+    "shareImageErrorDescGeneral": "An error occurred while generating the image."
   },
   "errorAnalysis": {
-    "title": "Performance Analysis",
-    "completeSessionPrompt": "Complete a typing session to see your performance analysis.",
-    "keyMetricsTitle": "Key Metrics",
-    "performanceComparisonTitle": "Performance Comparison",
-    "overallAccuracyTitle": "Overall Accuracy",
-    "specificErrorsTitle": "Detailed Errors",
+    "title": "Performance Report",
+    "sessionReportSubtitle": "A detailed breakdown of your typing session.",
+    "completeSessionPrompt": "Complete a typing session to see your performance report.",
+    "keyMetricsTitle": "Key Metrics Overview",
+    "performanceComparisonTitle": "Speed Comparison (vs. Average)",
+    "accuracyBreakdownTitle": "Accuracy Breakdown",
+    "specificErrorsTitle": "Detailed Error Log",
     "errorDetail": "Mistake at char {{index}}: You typed {{actual}} instead of {{expected}}.",
     "spaceChar": "'space'",
     "mostFrequentErrors": "Most Frequent Error Patterns",
     "frequency": "Frequency",
-    "noErrors": "Flawless! No errors made.",
+    "noErrors": "Flawless Performance!",
+    "perfectScore": "Congratulations on a perfect score with no errors.",
     "wpmComparison": {
       "yourWpm": "Your WPM: {{wpm}}",
       "averageIsWPM": "Avg: {{avg}} WPM"
@@ -53,10 +62,24 @@
       "lower": "{{diff}} lower",
       "onPar": "On Par"
     },
-    "errorCount": "Errors",
+    "errorCount": "Total Errors",
+    "errorCountDescription": "Number of incorrect characters.",
     "correctCharacters": "Correct Chars",
-    "totalSampleCharacters": "Total Chars (Sample)",
-    "secondsUnit": "s"
+    "correctCharsDescription": "Characters typed matching sample.",
+    "totalSampleCharacters": "Sample Length",
+    "totalSampleCharsDescription": "Total characters in the sample text.",
+    "secondsUnit": "s",
+    "errorRate": "Error Rate",
+    "errorRateDescription": "Percentage of errors in sample.",
+    "wordsTyped": "Words Typed",
+    "wordsTypedDescription": "Total words entered.",
+    "charsTyped": "Chars Typed",
+    "charsTypedDescription": "Total characters entered.",
+    "wpmDescription": "Words Per Minute.",
+    "cpmDescription": "Characters Per Minute.",
+    "accuracyDescription": "Correct characters percentage.",
+    "timeDescription": "Total time for the test.",
+    "reportGeneratedHint": "Report generated on {{date}}"
   },
   "keystrokeLog": {
     "title": "Keystroke Log",
@@ -66,9 +89,9 @@
     "statusHeader": "Status",
     "timestampHeader": "Timestamp",
     "statusValues": {
-        "correct": "correct",
-        "incorrect": "incorrect",
-        "corrected": "corrected"
+        "correct": "Correct",
+        "incorrect": "Incorrect",
+        "corrected": "Corrected (via backspace)"
     },
     "noKeystrokes": "No keystrokes recorded yet."
   },
@@ -78,23 +101,36 @@
   "audioErrorTitle": "Audio Error",
   "audioErrorDesc": "Could not enable sound. Click the input area and try again.",
   "csvHeaders": {
-    "generalStats": "General Stats",
-    "reportGeneratedOn": "Report Generated On",
-    "wpm": "WPM",
-    "cpm": "CPM",
-    "wps": "WPS",
-    "accuracy": "Accuracy",
-    "timeElapsed": "TimeElapsedSeconds",
-    "sampleText": "SampleText",
-    "keystrokeHistory": "Keystroke History",
-    "char": "ExpectedChar",
-    "inputChar": "TypedChar",
-    "status": "Status",
-    "timestamp": "Timestamp",
-    "errors": "Errors",
-    "expected": "Expected",
-    "actual": "Actual",
-    "index": "Index"
+    "reportTitle": "KEYSTROKE INSIGHTS REPORT",
+    "noDataAvailable": "No data available for this section.",
+    "config": {
+      "title": "TEST CONFIGURATION",
+      "reportGeneratedOn": "Report Generated On",
+      "language": "Language",
+      "theme": "Theme",
+      "fontSize": "Font Size",
+      "onScreenKeyboard": "On-Screen Keyboard Used",
+      "oskUsed": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "sessionSummary": {
+      "title": "SESSION SUMMARY"
+    },
+    "sampleTextFullTitle": "SAMPLE TEXT (FULL)",
+    "sampleTextFull": "Full Sample Text",
+    "typedTextFullTitle": "TYPED TEXT (FULL)",
+    "typedTextFull": "Full Typed Text",
+    "keystrokeHistory": {
+      "title": "KEYSTROKE HISTORY"
+    },
+    "errors": {
+      "title": "DETAILED ERRORS",
+      "index": "Index",
+      "expected": "Expected Char",
+      "actual": "Actual Char"
+    }
   },
   "localeForDate": "en-US",
   "errorDisplay": {
@@ -112,7 +148,7 @@
         "dark": "Dark"
       },
       "fontSize": {
-        "label": "Font Size",
+        "label": "Font Size (Sample/Input)",
         "small": "Small",
         "normal": "Normal",
         "large": "Large"
@@ -124,7 +160,7 @@
     },
     "display": {
       "title": "Display Options",
-      "showErrorAnalysis": "Show Performance Analysis",
+      "showErrorAnalysis": "Show Performance Report",
       "showKeystrokeHistory": "Show Keystroke Log"
     },
     "closeButton": "Done"
