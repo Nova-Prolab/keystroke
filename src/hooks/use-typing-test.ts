@@ -15,7 +15,17 @@ const ALL_SAMPLE_TEXTS: Record<string, string[]> = {
     "What you get by achieving your goals is not as important as what you become by achieving your goals. Act as if what you do makes a difference. It does.",
     "Life is like riding a bicycle. To keep your balance, you must keep moving. The only limit to our realization of tomorrow will be our doubts of today.",
     "The future belongs to those who believe in the beauty of their dreams. It always seems impossible until it's done. Try to be a rainbow in someone's cloud.",
-    "Keep your face always toward the sunshine, and shadows will fall behind you. You will face many defeats in life, but never let yourself be defeated."
+    "Keep your face always toward the sunshine, and shadows will fall behind you. You will face many defeats in life, but never let yourself be defeated.",
+    "The only source of knowledge is experience. Imagination is more important than knowledge. Knowledge is limited. Imagination encircles the world.",
+    "Strive not to be a success, but rather to be of value. Two things are infinite: the universe and human stupidity; and I'm not sure about the universe.",
+    "If you want to live a happy life, tie it to a goal, not to people or things. The mind is everything. What you think you become.",
+    "Your time is limited, so don't waste it living someone else's life. Don't be trapped by dogma – which is living with the results of other people's thinking.",
+    "The best way to predict the future is to create it. People who are crazy enough to think they can change the world are the ones who do.",
+    "An unexamined life is not worth living. Whereof one cannot speak, thereof one must be silent. The limits of my language mean the limits of my world.",
+    "Happiness is not something readymade. It comes from your own actions. The purpose of our lives is to be happy. Get busy living or get busy dying.",
+    "You only live once, but if you do it right, once is enough. To live is the rarest thing in the world. Most people exist, that is all.",
+    "Good friends, good books, and a sleepy conscience: this is the ideal life. The truth is rarely pure and never simple.",
+    "It is never too late to be what you might have been. Do what you can, with what you have, where you are. Be the change that you wish to see in the world."
   ],
   es: [
     "El veloz murciélago hindú comía feliz cardillo y kiwi. La cigüeña tocaba el saxofón detrás del palenque de paja. ¡Qué fácil es escribir en español ahora!",
@@ -27,7 +37,17 @@ const ALL_SAMPLE_TEXTS: Record<string, string[]> = {
     "Lo que obtienes al alcanzar tus metas no es tan importante como en lo que te conviertes al alcanzar tus metas. Actúa como si lo que haces marcara la diferencia. Lo hace.",
     "La vida es como andar en bicicleta. Para mantener el equilibrio, debes seguir moviéndote. El único límite para nuestra realización del mañana serán nuestras dudas de hoy.",
     "El futuro pertenece a quienes creen en la belleza de sus sueños. Siempre parece imposible hasta que se hace. Intenta ser un arcoíris en la nube de alguien.",
-    "Mantén tu rostro siempre hacia el sol, y las sombras caerán detrás de ti. Enfrentarás muchas derrotas en la vida, pero nunca te dejes derrotar."
+    "Mantén tu rostro siempre hacia el sol, y las sombras caerán detrás de ti. Enfrentarás muchas derrotas en la vida, pero nunca te dejes derrotar.",
+    "La única fuente de conocimiento es la experiencia. La imaginación es más importante que el conocimiento. El conocimiento es limitado. La imaginación rodea el mundo.",
+    "No te esfuerces por ser un éxito, sino por ser de valor. Dos cosas son infinitas: el universo y la estupidez humana; y no estoy seguro sobre el universo.",
+    "Si quieres vivir una vida feliz, átala a una meta, no a personas o cosas. La mente lo es todo. En lo que piensas te conviertes.",
+    "Tu tiempo es limitado, así que no lo desperdicies viviendo la vida de otra persona. No te dejes atrapar por el dogma, que es vivir con los resultados Del pensamiento de Otras gentes.",
+    "La mejor manera de predecir el futuro es crearlo. Las personas que están lo suficientemente locas como para pensar que pueden cambiar el mundo son las que lo hacen.",
+    "Una vida sin examinar no vale la pena vivirla. De lo que no se puede hablar, hay que callar. Los límites de mi lenguaje significan los límites de mi mundo.",
+    "La felicidad no es algo ya hecho. Viene de tus propias acciones. El propósito de nuestras vidas es ser felices. Ocúpate viviendo o ocúpate muriendo.",
+    "Solo se vive una vez, pero si lo haces bien, una vez es suficiente. Vivir es la cosa más rara del mundo. La mayoría de la gente existe, eso es todo.",
+    "Buenos amigos, buenos libros y una conciencia tranquila: esta es la vida ideal. La verdad rara vez es pura y nunca simple.",
+    "Nunca es demasiado tarde para ser lo que podrías haber sido. Haz lo que puedas, con lo que tengas, donde estés. Sé el cambio que deseas ver en el mundo."
   ],
   pt: [
     "A rápida raposa marrom salta sobre o cão preguiçoso. Leve uísque Fagundes para casa hoje à noite. Zebras caolhas de Java querem passar num pequeno túnel.",
@@ -39,7 +59,17 @@ const ALL_SAMPLE_TEXTS: Record<string, string[]> = {
     "O que você conquista ao alcançar seus objetivos não é tão importante quanto o que você se torna ao alcançar seus objetivos. Aja como se o que você faz fizesse a diferença. Faz.",
     "A vida é como andar de bicicleta. Para manter o equilíbrio, você deve continuar se movendo. O único limite para a nossa realização do amanhã serão as nossas dúvidas de hoje.",
     "O futuro pertence àqueles que acreditam na beleza de seus sonhos. Sempre parece impossível até que seja feito. Tente ser um arco-íris na nuvem de alguém.",
-    "Mantenha seu rosto sempre em direção ao sol, e as sombras cairão atrás de você. Você enfrentará muitas derrotas na vida, mas nunca se deixe derrotar."
+    "Mantenha seu rosto sempre em direção ao sol, e as sombras cairão atrás de você. Você enfrentará muitas derrotas na vida, mas nunca se deixe derrotar.",
+    "A única fonte de conhecimento é a experiência. A imaginação é mais importante que o conhecimento. O conhecimento é limitado. A imaginação circunda o mundo.",
+    "Não se esforce para ser um sucesso, mas sim para ser de valor. Duas coisas são infinitas: o universo e a estupidez humana; e não tenho certeza sobre o universo.",
+    "Se você quer viver uma vida feliz, ligue-a a um objetivo, não a pessoas ou coisas. A mente é tudo. Aquilo que você pensa, você se torna.",
+    "Seu tempo é limitado, então não o desperdice vivendo a vida de outra pessoa. Não seja pego pelo dogma – que é viver com os resultados do pensamento de outras pessoas.",
+    "A melhor maneira de prever o futuro é criá-lo. Pessoas que são loucas o suficiente para achar que podem mudar o mundo são aquelas que o fazem.",
+    "Uma vida não examinada não vale a pena ser vivida. Sobre aquilo de que não se pode falar, deve-se calar. Os limites da minha linguagem significam os limites do meu mundo.",
+    "A felicidade não é algo pronto. Ela vem de suas próprias ações. O propósito de nossas vidas é ser feliz. Ocupe-se vivendo ou ocupe-se morrendo.",
+    "Você só vive uma vez, mas se fizer direito, uma vez é o suficiente. Viver é a coisa mais rara do mundo. A maioria das pessoas existe, isso é tudo.",
+    "Bons amigos, bons livros e uma consciência sonolenta: esta é a vida ideal. A verdade raramente é pura e nunca simples.",
+    "Nunca é tarde demais para ser o que você poderia ter sido. Faça o que puder, com o que você tem, onde você está. Seja a mudança que você deseja ver no mundo."
   ],
 };
 
@@ -85,7 +115,7 @@ export function useTypingTest() {
   const [typedText, setTypedText] = useState<string>("");
   const [sessionActive, setSessionActive] = useState<boolean>(false);
   const [startTime, setStartTime] = useState<number | null>(null);
-  const [endTime, setEndTime] = useState<number | null>(null);
+  const [endTime, setEndTimeState] = useState<number | null>(null); // Renamed to avoid conflict
   
   const [stats, setStats] = useState<TypingStats>({ wpm: 0, cpm: 0, wps: 0, accuracy: 100, timeElapsed: 0 });
   const [keystrokeHistory, setKeystrokeHistory] = useState<Keystroke[]>([]);
@@ -104,7 +134,7 @@ export function useTypingTest() {
     setSessionActive(false);
     setTypedText("");
     setStartTime(null);
-    setEndTime(null);
+    setEndTimeState(null);
     setStats({ wpm: 0, cpm: 0, wps: 0, accuracy: 100, timeElapsed: 0 });
     setKeystrokeHistory([]);
     setErrors([]);
@@ -131,7 +161,7 @@ export function useTypingTest() {
     if (!sessionActive || !startTime || !sampleText) return;
 
     const calculateStats = () => {
-      const now = endTime || Date.now(); // Use endTime if test is finished
+      const now = endTime || Date.now(); 
       const timeElapsedSeconds = (now - startTime) / 1000;
       if (timeElapsedSeconds <= 0) return;
 
@@ -152,9 +182,8 @@ export function useTypingTest() {
 
     if (typedText.length === sampleText.length && !endTime) {
         const finalEndTime = Date.now();
-        setEndTime(finalEndTime);
+        setEndTimeState(finalEndTime);
         setSessionActive(false);
-         // Perform final calculation using the exact end time
         const timeElapsedSeconds = (finalEndTime - startTime) / 1000;
         if (timeElapsedSeconds > 0) {
             let correctChars = 0;
@@ -169,7 +198,7 @@ export function useTypingTest() {
             const accuracy = typedText.length > 0 ? Math.round((correctChars / typedText.length) * 100) : 100;
             setStats({ wpm, cpm, wps, accuracy, timeElapsed: parseFloat(timeElapsedSeconds.toFixed(1)) });
         }
-        return; // No interval needed if test is finished
+        return; 
     }
 
     const intervalId = setInterval(calculateStats, 500);
@@ -222,10 +251,9 @@ export function useTypingTest() {
       } else {
         setErrors(prevErrors => prevErrors.filter(err => err.index !== currentIndex));
       }
-    } else if (currentIndex >= sampleText.length -1 ) { // -1 because length is 1-based, index is 0-based
-      // If typed text length equals sample text length, it's effectively done
+    } else if (currentIndex >= sampleText.length -1 ) { 
       if (currentTypedText.length === sampleText.length && !endTime) {
-        setEndTime(Date.now());
+        setEndTimeState(Date.now());
         setSessionActive(false);
       }
     }
@@ -250,8 +278,7 @@ export function useTypingTest() {
       } else if (status === 'correct') {
         className = "text-green-600 dark:text-green-400 font-medium";
       } else if (status === 'incorrect') {
-        // Changed styling for incorrect characters: red text, bold, with a red underline
-        className = "text-red-600 dark:text-red-500 font-semibold cursor-pointer underline decoration-red-500 underline-offset-2";
+        className = "text-red-600 dark:text-red-500 font-semibold underline decoration-red-500 underline-offset-2 cursor-pointer";
       }
 
       return { 
@@ -279,6 +306,6 @@ export function useTypingTest() {
     formattedSampleText: getFormattedSampleText(),
     timeElapsed: stats.timeElapsed,
     isReady: i18nInitialized && sampleText !== "",
+    endTime, // Expose endTime
   };
 }
-

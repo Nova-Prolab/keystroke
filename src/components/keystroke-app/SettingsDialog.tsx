@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import type { Theme, FontSize } from '@/app/page'; // Assuming types are exported from page.tsx
+import type { Theme, FontSize } from '@/app/page'; 
 import { useI18n } from '@/contexts/i18nContext';
 import { Separator } from '@/components/ui/separator';
 
@@ -29,6 +29,8 @@ interface SettingsDialogProps {
   onShowErrorAnalysisChange: (show: boolean) => void;
   showKeystrokeHistory: boolean;
   onShowKeystrokeHistoryChange: (show: boolean) => void;
+  useOnScreenKeyboard: boolean;
+  onUseOnScreenKeyboardChange: (useOSK: boolean) => void;
 }
 
 const SettingsDialog: React.FC<SettingsDialogProps> = ({
@@ -42,6 +44,8 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({
   onShowErrorAnalysisChange,
   showKeystrokeHistory,
   onShowKeystrokeHistoryChange,
+  useOnScreenKeyboard,
+  onUseOnScreenKeyboardChange,
 }) => {
   const { t } = useI18n();
 
@@ -93,6 +97,23 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({
               </RadioGroup>
             </div>
           </div>
+
+          <div className="space-y-3">
+            <h3 className="text-lg font-medium text-foreground">{t('settingsDialog.input.title')}</h3>
+            <Separator />
+            <div className="flex items-center justify-between">
+              <Label htmlFor="onscreen-keyboard-toggle" className="text-foreground">
+                {t('settingsDialog.input.useOnScreenKeyboard')}
+              </Label>
+              <Switch
+                id="onscreen-keyboard-toggle"
+                checked={useOnScreenKeyboard}
+                onCheckedChange={onUseOnScreenKeyboardChange}
+                aria-label={t('settingsDialog.input.useOnScreenKeyboard')}
+              />
+            </div>
+          </div>
+
 
           <div className="space-y-3">
             <h3 className="text-lg font-medium text-foreground">{t('settingsDialog.display.title')}</h3>

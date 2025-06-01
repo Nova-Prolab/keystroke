@@ -33,7 +33,7 @@
     "completeSessionPrompt": "Completa una sesión de mecanografía para ver tu análisis de rendimiento.",
     "overallAccuracyTitle": "Precisión General",
     "specificErrorsTitle": "Errores Detallados:",
-    "errorDetail": "Carácter {{index}}: Escribiste {{actual}} en lugar de {{expected}}.",
+    "errorDetail": "Error en el carácter {{index}}: Escribiste {{actual}} en lugar de {{expected}}.",
     "spaceChar": "'espacio'",
     "mostFrequentErrors": "Patrones de Error Más Frecuentes:",
     "frequency": "Frecuencia",
@@ -112,11 +112,19 @@
         "large": "Grande"
       }
     },
+    "input": {
+      "title": "Método de Entrada",
+      "useOnScreenKeyboard": "Usar Teclado en Pantalla"
+    },
     "display": {
       "title": "Opciones de Visualización",
       "showErrorAnalysis": "Mostrar Análisis de Rendimiento",
       "showKeystrokeHistory": "Mostrar Registro de Teclas"
     },
     "closeButton": "Hecho"
+  },
+  "onScreenKeyboard": {
+    "backspace": "Borr",
+    "space": "Espacio"
   }
 }

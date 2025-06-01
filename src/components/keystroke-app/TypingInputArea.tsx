@@ -11,16 +11,25 @@ interface TypingInputAreaProps {
   value: string;
   onChange: (value: string) => void;
   disabled: boolean;
+  readOnly?: boolean; // New prop
   inputRef: React.RefObject<HTMLTextAreaElement>;
   onFocus?: () => void;
   fontSize: FontSize;
 }
 
-const TypingInputArea: React.FC<TypingInputAreaProps> = ({ value, onChange, disabled, inputRef, onFocus, fontSize }) => {
+const TypingInputArea: React.FC<TypingInputAreaProps> = ({ 
+  value, 
+  onChange, 
+  disabled, 
+  readOnly, 
+  inputRef, 
+  onFocus, 
+  fontSize 
+}) => {
   const { t } = useI18n();
 
   const fontSizeClasses: Record<FontSize, string> = {
-    sm: 'text-md md:text-lg', // Adjusted to match sample display logic a bit closer
+    sm: 'text-md md:text-lg', 
     base: 'text-lg md:text-xl',
     lg: 'text-xl md:text-2xl',
   };
@@ -33,9 +42,11 @@ const TypingInputArea: React.FC<TypingInputAreaProps> = ({ value, onChange, disa
       placeholder={t('typingInputPlaceholder')}
       className={cn(
         "p-4 h-32 resize-none focus:ring-accent focus:ring-2 bg-background font-mono",
-        fontSizeClasses[fontSize]
+        fontSizeClasses[fontSize],
+        readOnly && "cursor-default text-muted-foreground" // Style when readOnly (OSK active)
       )}
       disabled={disabled}
+      readOnly={readOnly} // Apply readOnly prop
       aria-label={t('typingInputAriaLabel')}
       onFocus={onFocus}
       autoFocus

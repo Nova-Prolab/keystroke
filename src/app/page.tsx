@@ -11,6 +11,7 @@ import Controls from '@/components/keystroke-app/Controls';
 import ErrorAnalysisDisplay from '@/components/keystroke-app/ErrorAnalysisDisplay';
 import KeystrokeHistoryDisplay from '@/components/keystroke-app/KeystrokeHistoryDisplay';
 import SettingsDialog from '@/components/keystroke-app/SettingsDialog';
+import OnScreenKeyboard from '@/components/keystroke-app/OnScreenKeyboard';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Keyboard } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
@@ -34,6 +35,7 @@ export default function KeystrokeInsightsPage() {
     startTest,
     formattedSampleText,
     isReady: typingTestReady,
+    endTime, // Added endTime from useTypingTest
   } = useTypingTest();
 
   const [soundEnabled, setSoundEnabled] = useState<boolean>(false);
@@ -42,10 +44,11 @@ export default function KeystrokeInsightsPage() {
   const [isMounted, setIsMounted] = useState(false);
 
   // Settings State
-  const [theme, setTheme] = useState<Theme>('light'); // Default to light
+  const [theme, setTheme] = useState<Theme>('light');
   const [fontSize, setFontSize] = useState<FontSize>('base');
   const [showErrorAnalysis, setShowErrorAnalysis] = useState<boolean>(true);
   const [showKeystrokeHistory, setShowKeystrokeHistory] = useState<boolean>(true);
+  const [useOnScreenKeyboard, setUseOnScreenKeyboard] = useState<boolean>(false);
   const [isSettingsDialogOpen, setIsSettingsDialogOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -64,13 +67,12 @@ export default function KeystrokeInsightsPage() {
       }
     }
 
-    // Load settings from localStorage
     const storedTheme = localStorage.getItem('theme') as Theme | null;
     if (storedTheme) {
       setTheme(storedTheme);
       document.documentElement.classList.toggle('dark', storedTheme === 'dark');
     } else {
-      // If no theme is stored, 'light' is already set as default state
+      setTheme('light'); // Default to light
       document.documentElement.classList.toggle('dark', false);
     }
 
@@ -83,13 +85,16 @@ export default function KeystrokeInsightsPage() {
     const storedShowHistory = localStorage.getItem('showKeystrokeHistory');
     if (storedShowHistory !== null) setShowKeystrokeHistory(JSON.parse(storedShowHistory));
 
+    const storedUseOSK = localStorage.getItem('useOnScreenKeyboard');
+    if (storedUseOSK !== null) setUseOnScreenKeyboard(JSON.parse(storedUseOSK));
+
     return () => {
       if (audioContext && audioContext.state !== 'closed') {
         audioContext.close().catch(err => console.warn("Failed to close AudioContext:", err));
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18nReady]); // Only run once on mount after i18n is ready
+  }, [i18nReady]); 
 
   useEffect(() => {
     if (i18nReady) {
@@ -118,6 +123,13 @@ export default function KeystrokeInsightsPage() {
     localStorage.setItem('showKeystrokeHistory', JSON.stringify(show));
   };
 
+  const handleUseOnScreenKeyboardChange = (useOSK: boolean) => {
+    setUseOnScreenKeyboard(useOSK);
+    localStorage.setItem('useOnScreenKeyboard', JSON.stringify(useOSK));
+    if (!useOSK && inputRef.current) { // If switching back to physical, focus textarea
+        inputRef.current.focus();
+    }
+  };
 
   const playKeystrokeSound = useCallback(() => {
     if (soundEnabled && audioContext && audioContext.state === 'running') {
@@ -140,9 +152,9 @@ export default function KeystrokeInsightsPage() {
     }
   }, [soundEnabled, audioContext]);
 
-  const handleLocalInputChange = (value: string) => {
+  const localHandleInputChange = (value: string) => {
     if (!sampleText) return;
-    handleInputChange(value);
+    handleInputChange(value); // This comes from useTypingTest hook
     if (sessionActive || (!sessionActive && value.length > 0 && value.length < sampleText.length)) { 
       playKeystrokeSound();
     }
@@ -168,6 +180,25 @@ export default function KeystrokeInsightsPage() {
      if (audioContext && audioContext.state === 'suspended') {
       audioContext.resume().catch(err => console.warn("Could not resume audio context on focus:", err));
     }
+  };
+
+  // On-Screen Keyboard Handlers
+  const handleOSKChar = (char: string) => {
+    if (endTime || !sampleText || (typedText.length >= sampleText.length)) return;
+    const newTypedText = typedText + char;
+    localHandleInputChange(newTypedText);
+  };
+
+  const handleOSKBackspace = () => {
+    if (endTime || !sampleText || typedText.length === 0) return;
+    const newTypedText = typedText.slice(0, -1);
+    localHandleInputChange(newTypedText);
+  };
+
+  const handleOSKSpace = () => {
+    if (endTime || !sampleText || (typedText.length >= sampleText.length)) return;
+    const newTypedText = typedText + ' ';
+    localHandleInputChange(newTypedText);
   };
   
   const isTestFinished = sampleText && typedText.length === sampleText.length && !sessionActive && stats.timeElapsed > 0;
@@ -200,12 +231,20 @@ export default function KeystrokeInsightsPage() {
                 <SampleTextDisplay formattedText={formattedSampleText} fontSize={fontSize} />
                 <TypingInputArea
                   value={typedText}
-                  onChange={handleLocalInputChange}
-                  disabled={!!isTestFinished}
+                  onChange={localHandleInputChange}
+                  disabled={!!isTestFinished || useOnScreenKeyboard}
+                  readOnly={useOnScreenKeyboard}
                   inputRef={inputRef}
                   onFocus={handleInputFocus}
                   fontSize={fontSize}
                 />
+                {useOnScreenKeyboard && (
+                  <OnScreenKeyboard 
+                    onChar={handleOSKChar}
+                    onBackspace={handleOSKBackspace}
+                    onSpace={handleOSKSpace}
+                  />
+                )}
             </CardContent>
           </Card>
           
@@ -249,6 +288,8 @@ export default function KeystrokeInsightsPage() {
         onShowErrorAnalysisChange={handleShowErrorAnalysisChange}
         showKeystrokeHistory={showKeystrokeHistory}
         onShowKeystrokeHistoryChange={handleShowKeystrokeHistoryChange}
+        useOnScreenKeyboard={useOnScreenKeyboard}
+        onUseOnScreenKeyboardChange={handleUseOnScreenKeyboardChange}
       />
     </>
   );

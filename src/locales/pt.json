@@ -33,7 +33,7 @@
     "completeSessionPrompt": "Complete uma sessão de digitação para ver sua análise de desempenho.",
     "overallAccuracyTitle": "Precisão Geral",
     "specificErrorsTitle": "Erros Detalhados:",
-    "errorDetail": "Caractere {{index}}: Você digitou {{actual}} em vez de {{expected}}.",
+    "errorDetail": "Erro no caractere {{index}}: Você digitou {{actual}} em vez de {{expected}}.",
     "spaceChar": "'espaço'",
     "mostFrequentErrors": "Padrões de Erro Mais Frequentes:",
     "frequency": "Frequência",
@@ -112,11 +112,19 @@
         "large": "Grande"
       }
     },
+    "input": {
+      "title": "Método de Entrada",
+      "useOnScreenKeyboard": "Usar Teclado na Tela"
+    },
     "display": {
       "title": "Opções de Exibição",
       "showErrorAnalysis": "Mostrar Análise de Desempenho",
       "showKeystrokeHistory": "Mostrar Registro de Teclas"
     },
     "closeButton": "Feito"
+  },
+  "onScreenKeyboard": {
+    "backspace": "Apgr",
+    "space": "Espaço"
   }
 }
