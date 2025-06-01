@@ -169,5 +169,8 @@
     "backspace": "Apgr",
     "space": "Espaço",
     "shift": "Shift"
+  },
+  "loading": {
+    "preparingChallenge": "Preparando seu desafio de digitação"
   }
 }

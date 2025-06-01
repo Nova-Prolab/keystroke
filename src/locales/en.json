@@ -169,5 +169,8 @@
     "backspace": "Bksp",
     "space": "Space",
     "shift": "Shift"
+  },
+  "loading": {
+    "preparingChallenge": "Preparing your typing challenge"
   }
 }

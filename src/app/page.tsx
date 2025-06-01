@@ -279,8 +279,22 @@ export default function KeystrokeInsightsPage() {
 
   if (!isMounted || !i18nReady || !typingTestReady || !sampleText) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-background">
-        <Keyboard className="h-16 w-16 animate-pulse text-primary" />
+      <div className="flex flex-col items-center justify-center min-h-screen bg-background text-foreground p-6 text-center">
+        <div className="mb-8">
+          <Keyboard className="h-28 w-28 text-primary animate-pulse" />
+        </div>
+        <h1 className="text-4xl font-bold text-primary mb-3">
+          {i18nReady ? t('headerTitleStart') : 'Keystroke ' }
+          <span className="text-accent">{i18nReady ? t('headerTitleAccent') : 'Insights'}</span>
+        </h1>
+        <p className="text-xl text-muted-foreground flex items-center justify-center">
+          <span>{i18nReady ? t('loading.preparingChallenge') : 'Loading challenge'}</span>
+          <span className="inline-block ml-2">
+            <span className="animate-ping inline-block h-2 w-2 bg-accent rounded-full"></span>
+            <span className="animate-ping inline-block h-2 w-2 bg-accent rounded-full mx-1" style={{ animationDelay: '0.15s' }}></span>
+            <span className="animate-ping inline-block h-2 w-2 bg-accent rounded-full" style={{ animationDelay: '0.3s' }}></span>
+          </span>
+        </p>
       </div>
     );
   }

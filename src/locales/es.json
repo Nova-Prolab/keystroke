@@ -169,5 +169,8 @@
     "backspace": "Borr",
     "space": "Espacio",
     "shift": "Mayús"
+  },
+  "loading": {
+    "preparingChallenge": "Preparando tu desafío de mecanografía"
   }
 }
