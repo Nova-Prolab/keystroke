@@ -1,4 +1,6 @@
 
+"use client";
+
 import type { TypingStats, Keystroke, ErrorRecord } from '@/hooks/use-typing-test';
 import html2canvas from 'html2canvas';
 import type { Theme, FontSize } from '@/app/page';
