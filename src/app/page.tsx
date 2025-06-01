@@ -310,10 +310,15 @@ export default function KeystrokeInsightsPage() {
   return (
     <>
       <main className="container mx-auto px-4 py-8 flex flex-col items-center min-h-screen bg-background text-foreground">
-        <header className="mb-10 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-primary flex items-center justify-center">
-            <Keyboard className="mr-3 h-10 w-10 md:h-12 md:w-12 text-accent" />
-            {t('headerTitleStart')}<span className="text-accent">{t('headerTitleAccent')}</span>
+        <header className="mb-10 text-center w-full max-w-full">
+          <h1 
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary flex items-center justify-center flex-wrap"
+          >
+            <Keyboard className="mr-2 h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 lg:h-12 lg:w-12 text-accent flex-shrink-0" />
+            <span className="text-center">
+              {t('headerTitleStart')}
+              <span className="text-accent">{t('headerTitleAccent')}</span>
+            </span>
           </h1>
           <p className="text-md md:text-lg text-muted-foreground mt-2">{t('headerSubtitle')}</p>
         </header>
