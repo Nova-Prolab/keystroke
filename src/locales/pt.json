@@ -78,6 +78,9 @@
     "actual": "Real",
     "index": "Índice"
   },
-  "localeForDate": "pt-BR"
+  "localeForDate": "pt-BR",
+  "errorDisplay": {
+    "toastTitle": "Erro de Digitação",
+    "toastDescription": "No caractere {{index}}: Esperado {{expected}}, você digitou {{actual}}."
+  }
 }
-

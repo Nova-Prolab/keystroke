@@ -78,6 +78,9 @@
     "actual": "Actual",
     "index": "Index"
   },
-  "localeForDate": "en-US"
+  "localeForDate": "en-US",
+  "errorDisplay": {
+    "toastTitle": "Typing Mistake",
+    "toastDescription": "At character {{index}}: Expected {{expected}}, you typed {{actual}}."
+  }
 }
-

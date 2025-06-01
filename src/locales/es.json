@@ -78,6 +78,9 @@
     "actual": "Real",
     "index": "Índice"
   },
-  "localeForDate": "es-ES"
+  "localeForDate": "es-ES",
+  "errorDisplay": {
+    "toastTitle": "Error de Mecanografía",
+    "toastDescription": "En el carácter {{index}}: Esperado {{expected}}, escribiste {{actual}}."
+  }
 }
-

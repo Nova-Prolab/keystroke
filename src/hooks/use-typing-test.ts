@@ -47,6 +47,14 @@ export type TypingStats = {
   timeElapsed: number; // in seconds
 };
 
+export type FormattedCharacter = {
+  char: string;
+  className: string;
+  key: string;
+  actualChar?: string;
+  originalIndex: number;
+};
+
 const getNewSampleText = (locale: string): string => {
   const textsForLocale = ALL_SAMPLE_TEXTS[locale] || ALL_SAMPLE_TEXTS['en'];
   return textsForLocale[Math.floor(Math.random() * textsForLocale.length)];
@@ -205,25 +213,35 @@ export function useTypingTest() {
     }
   };
   
-  const getFormattedSampleText = useCallback(() => {
+  const getFormattedSampleText = useCallback((): FormattedCharacter[] => {
     if (!sampleText) return [];
     return sampleText.split('').map((char, index) => {
-      let status: 'correct' | 'incorrect' | 'pending' | 'extra' = 'pending';
+      let status: 'correct' | 'incorrect' | 'pending' = 'pending';
+      let actualCharValue: string | undefined = undefined;
       
       if (index < typedText.length) {
         status = typedText[index] === char ? 'correct' : 'incorrect';
+        if (status === 'incorrect') {
+          actualCharValue = typedText[index];
+        }
       }
       
       let className = "text-muted-foreground"; 
       if (index === typedText.length && sessionActive) {
         className = "text-foreground animate-pulse border-b-2 border-accent";
       } else if (status === 'correct') {
-        className = "text-green-500";
+        className = "text-green-600 dark:text-green-400 font-medium";
       } else if (status === 'incorrect') {
-        className = "bg-yellow-300 text-black border-2 border-red-700 font-bold";
+        className = "text-red-100 bg-red-600 dark:text-red-200 dark:bg-red-700/80 p-px rounded-sm cursor-pointer font-semibold";
       }
 
-      return { char, className, key: `${char}-${index}` };
+      return { 
+        char, 
+        className, 
+        key: `${char}-${index}-${status}`, // Make key more unique if char can repeat
+        actualChar: actualCharValue,
+        originalIndex: index 
+      };
     });
   }, [sampleText, typedText, sessionActive]);
 
