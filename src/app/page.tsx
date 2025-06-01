@@ -35,7 +35,7 @@ export default function KeystrokeInsightsPage() {
     startTest,
     formattedSampleText,
     isReady: typingTestReady,
-    endTime, 
+    endTime,
   } = useTypingTest();
 
   const [soundEnabled, setSoundEnabled] = useState<boolean>(false);
@@ -72,7 +72,7 @@ export default function KeystrokeInsightsPage() {
       setTheme(storedTheme);
       document.documentElement.classList.toggle('dark', storedTheme === 'dark');
     } else {
-      setTheme('light'); 
+      setTheme('light');
       document.documentElement.classList.toggle('dark', false);
     }
 
@@ -81,7 +81,7 @@ export default function KeystrokeInsightsPage() {
 
     const storedShowError = localStorage.getItem('showErrorAnalysis');
     if (storedShowError !== null) setShowErrorAnalysis(JSON.parse(storedShowError));
-    
+
     const storedShowHistory = localStorage.getItem('showKeystrokeHistory');
     if (storedShowHistory !== null) setShowKeystrokeHistory(JSON.parse(storedShowHistory));
 
@@ -94,7 +94,7 @@ export default function KeystrokeInsightsPage() {
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18nReady]); 
+  }, [i18nReady]);
 
   useEffect(() => {
     if (i18nReady) {
@@ -126,7 +126,7 @@ export default function KeystrokeInsightsPage() {
   const handleUseOnScreenKeyboardChange = (useOSK: boolean) => {
     setUseOnScreenKeyboard(useOSK);
     localStorage.setItem('useOnScreenKeyboard', JSON.stringify(useOSK));
-    if (!useOSK && inputRef.current && (sessionActive || !isTestFinished)) { 
+    if (!useOSK && inputRef.current && (sessionActive || !isTestFinished)) {
         inputRef.current.focus();
     }
   };
@@ -137,15 +137,15 @@ export default function KeystrokeInsightsPage() {
         const oscillator = audioContext.createOscillator();
         const gainNode = audioContext.createGain();
 
-        oscillator.type = 'sine'; 
-        oscillator.frequency.setValueAtTime(660, audioContext.currentTime); 
-        gainNode.gain.setValueAtTime(0.05, audioContext.currentTime); 
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(660, audioContext.currentTime);
+        gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
 
         oscillator.connect(gainNode);
         gainNode.connect(audioContext.destination);
 
         oscillator.start();
-        oscillator.stop(audioContext.currentTime + 0.05); 
+        oscillator.stop(audioContext.currentTime + 0.05);
       } catch (e) {
         console.error("Error playing sound:", e);
       }
@@ -154,12 +154,12 @@ export default function KeystrokeInsightsPage() {
 
   const localHandleInputChange = (value: string) => {
     if (!sampleText) return;
-    handleInputChange(value); 
-    if (sessionActive || (!sessionActive && value.length > 0 && value.length < sampleText.length)) { 
+    handleInputChange(value);
+    if (sessionActive || (!sessionActive && value.length > 0 && value.length < sampleText.length)) {
       playKeystrokeSound();
     }
   };
-  
+
   const handleSoundToggle = (enabled: boolean) => {
     setSoundEnabled(enabled);
     if (enabled && audioContext && audioContext.state === 'suspended') {
@@ -175,7 +175,7 @@ export default function KeystrokeInsightsPage() {
       });
     }
   };
-  
+
   const handleInputFocus = () => {
      if (audioContext && audioContext.state === 'suspended') {
       audioContext.resume().catch(err => console.warn("Could not resume audio context on focus:", err));
@@ -211,7 +211,7 @@ export default function KeystrokeInsightsPage() {
     const newTypedText = typedText + ' ';
     localHandleInputChange(newTypedText);
   };
-  
+
   const isTestFinished = !!endTime; // Use endTime to reliably determine if test is finished
 
   if (!isMounted || !i18nReady || !typingTestReady || !sampleText) {
@@ -250,7 +250,7 @@ export default function KeystrokeInsightsPage() {
                   fontSize={fontSize}
                 />
                 {useOnScreenKeyboard && !isTestFinished && (
-                  <OnScreenKeyboard 
+                  <OnScreenKeyboard
                     onChar={handleOSKChar}
                     onBackspace={handleOSKBackspace}
                     onSpace={handleOSKSpace}
@@ -258,7 +258,7 @@ export default function KeystrokeInsightsPage() {
                 )}
             </CardContent>
           </Card>
-          
+
           <StatsDisplay stats={stats} />
 
           <Controls
@@ -274,15 +274,15 @@ export default function KeystrokeInsightsPage() {
             isFinished={isTestFinished}
             onOpenSettings={() => setIsSettingsDialogOpen(true)}
           />
-          
+
           {showErrorAnalysis && (isTestFinished || (errors.length > 0 && !sessionActive && stats.timeElapsed > 0)) && (
-            <ErrorAnalysisDisplay errors={errors} stats={stats} isFinished={isTestFinished} />
+            <ErrorAnalysisDisplay errors={errors} stats={stats} isFinished={isTestFinished} sampleText={sampleText} />
           )}
 
           {showKeystrokeHistory && (isTestFinished || (keystrokeHistory.length > 0 && !sessionActive && stats.timeElapsed > 0)) && (
             <KeystrokeHistoryDisplay history={keystrokeHistory} isFinished={isTestFinished} />
           )}
-          
+
         </div>
         <footer className="mt-12 text-center text-sm text-muted-foreground py-4">
             <p>{t('footerText', { year: new Date().getFullYear() })}</p>

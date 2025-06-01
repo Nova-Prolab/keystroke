@@ -31,11 +31,13 @@
   "errorAnalysis": {
     "title": "Performance Analysis",
     "completeSessionPrompt": "Complete a typing session to see your performance analysis.",
+    "keyMetricsTitle": "Key Metrics",
+    "performanceComparisonTitle": "Performance Comparison",
     "overallAccuracyTitle": "Overall Accuracy",
-    "specificErrorsTitle": "Detailed Errors:",
+    "specificErrorsTitle": "Detailed Errors",
     "errorDetail": "Mistake at char {{index}}: You typed {{actual}} instead of {{expected}}.",
     "spaceChar": "'space'",
-    "mostFrequentErrors": "Most Frequent Error Patterns:",
+    "mostFrequentErrors": "Most Frequent Error Patterns",
     "frequency": "Frequency",
     "noErrors": "Flawless! No errors made.",
     "wpmComparison": {
@@ -49,8 +51,12 @@
     "comparison": {
       "higher": "{{diff}} higher",
       "lower": "{{diff}} lower",
-      "onPar": "on par"
-    }
+      "onPar": "On Par"
+    },
+    "errorCount": "Errors",
+    "correctCharacters": "Correct Chars",
+    "totalSampleCharacters": "Total Chars (Sample)",
+    "secondsUnit": "s"
   },
   "keystrokeLog": {
     "title": "Keystroke Log",

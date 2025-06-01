@@ -31,11 +31,13 @@
   "errorAnalysis": {
     "title": "Análisis de Rendimiento",
     "completeSessionPrompt": "Completa una sesión de mecanografía para ver tu análisis de rendimiento.",
+    "keyMetricsTitle": "Métricas Clave",
+    "performanceComparisonTitle": "Comparación de Rendimiento",
     "overallAccuracyTitle": "Precisión General",
-    "specificErrorsTitle": "Errores Detallados:",
+    "specificErrorsTitle": "Errores Detallados",
     "errorDetail": "Error en el carácter {{index}}: Escribiste {{actual}} en lugar de {{expected}}.",
     "spaceChar": "'espacio'",
-    "mostFrequentErrors": "Patrones de Error Más Frecuentes:",
+    "mostFrequentErrors": "Patrones de Error Más Frecuentes",
     "frequency": "Frecuencia",
     "noErrors": "¡Impecable! Sin errores.",
     "wpmComparison": {
@@ -49,8 +51,12 @@
     "comparison": {
       "higher": "{{diff}} más alto",
       "lower": "{{diff}} más bajo",
-      "onPar": "a la par"
-    }
+      "onPar": "A la par"
+    },
+    "errorCount": "Errores",
+    "correctCharacters": "Chars Correctos",
+    "totalSampleCharacters": "Total Chars (Ejemplo)",
+    "secondsUnit": "s"
   },
   "keystrokeLog": {
     "title": "Registro de Teclas",
