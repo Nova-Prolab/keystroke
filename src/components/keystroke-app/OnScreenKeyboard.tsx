@@ -1,7 +1,7 @@
 
 "use client";
 
-import React from 'react'; // Added React import
+import React from 'react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Delete, CornerLeftUp, ArrowUpWideNarrow } from 'lucide-react'; // Icons
@@ -33,7 +33,7 @@ const OnScreenKeyboard: React.FC<OnScreenKeyboardProps> = ({ onChar, onBackspace
   const layout = [
     ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
     ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ñ'],
-    ['SHIFT', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.'],
+    ['SHIFT', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ':', ',', '.'],
     ['SPACE'],
   ];
 
@@ -71,9 +71,33 @@ const OnScreenKeyboard: React.FC<OnScreenKeyboardProps> = ({ onChar, onBackspace
               );
             }
             // Group Backspace with the last row of characters for better layout control
-            if (rowIndex === layout.length - 2 && key === '.') { // Assuming Backspace is conceptually after '.'
+            if (rowIndex === layout.length - 2 && key === '.') { // Check for '.' as the last char before backspace conceptually
               return (
                 <React.Fragment key="punctuation-and-backspace">
+                  {/* Render colon if it's before comma and period */}
+                  {row.includes(':') && layout[rowIndex][layout[rowIndex].indexOf('.') - 2] === ':' && (
+                     <Button
+                        key=":"
+                        variant="outline"
+                        className="h-10 w-10 md:h-11 md:w-11 text-sm md:text-base p-0 flex-grow"
+                        onClick={() => handleCharClick(':')}
+                        aria-label=":"
+                      >
+                        :
+                      </Button>
+                  )}
+                   {/* Render comma if it's before period */}
+                  {row.includes(',') && layout[rowIndex][layout[rowIndex].indexOf('.')] === '.' && layout[rowIndex][layout[rowIndex].indexOf('.') - 1] === ',' && (
+                     <Button
+                        key=","
+                        variant="outline"
+                        className="h-10 w-10 md:h-11 md:w-11 text-sm md:text-base p-0 flex-grow"
+                        onClick={() => handleCharClick(',')}
+                        aria-label=","
+                      >
+                        ,
+                      </Button>
+                  )}
                   <Button
                     key="."
                     variant="outline"
@@ -95,7 +119,7 @@ const OnScreenKeyboard: React.FC<OnScreenKeyboardProps> = ({ onChar, onBackspace
                 </React.Fragment>
               );
             }
-             if (key === ',' || key === '.') {
+             if (key === ',' || key === '.' || key === ':') { // Handle comma, period, and colon if not handled by the special backspace logic
                return (
                   <Button
                     key={key}
@@ -122,7 +146,7 @@ const OnScreenKeyboard: React.FC<OnScreenKeyboardProps> = ({ onChar, onBackspace
               </Button>
             );
           })}
-           {/* Add Backspace to the end of the third row if not handled with period */}
+           {/* Add Backspace to the end of the third row if not handled with period (fallback, should be covered above) */}
            {rowIndex === 2 && !row.includes('.') && (
              <Button
                 variant="outline"
