@@ -125,6 +125,7 @@
   },
   "onScreenKeyboard": {
     "backspace": "Bksp",
-    "space": "Space"
+    "space": "Space",
+    "shift": "Shift"
   }
 }

@@ -125,6 +125,7 @@
   },
   "onScreenKeyboard": {
     "backspace": "Borr",
-    "space": "Espacio"
+    "space": "Espacio",
+    "shift": "Mayús"
   }
 }

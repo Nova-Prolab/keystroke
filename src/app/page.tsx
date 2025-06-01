@@ -35,7 +35,7 @@ export default function KeystrokeInsightsPage() {
     startTest,
     formattedSampleText,
     isReady: typingTestReady,
-    endTime, // Added endTime from useTypingTest
+    endTime, 
   } = useTypingTest();
 
   const [soundEnabled, setSoundEnabled] = useState<boolean>(false);
@@ -72,7 +72,7 @@ export default function KeystrokeInsightsPage() {
       setTheme(storedTheme);
       document.documentElement.classList.toggle('dark', storedTheme === 'dark');
     } else {
-      setTheme('light'); // Default to light
+      setTheme('light'); 
       document.documentElement.classList.toggle('dark', false);
     }
 
@@ -126,7 +126,7 @@ export default function KeystrokeInsightsPage() {
   const handleUseOnScreenKeyboardChange = (useOSK: boolean) => {
     setUseOnScreenKeyboard(useOSK);
     localStorage.setItem('useOnScreenKeyboard', JSON.stringify(useOSK));
-    if (!useOSK && inputRef.current) { // If switching back to physical, focus textarea
+    if (!useOSK && inputRef.current && (sessionActive || !isTestFinished)) { 
         inputRef.current.focus();
     }
   };
@@ -154,7 +154,7 @@ export default function KeystrokeInsightsPage() {
 
   const localHandleInputChange = (value: string) => {
     if (!sampleText) return;
-    handleInputChange(value); // This comes from useTypingTest hook
+    handleInputChange(value); 
     if (sessionActive || (!sessionActive && value.length > 0 && value.length < sampleText.length)) { 
       playKeystrokeSound();
     }
@@ -184,24 +184,35 @@ export default function KeystrokeInsightsPage() {
 
   // On-Screen Keyboard Handlers
   const handleOSKChar = (char: string) => {
-    if (endTime || !sampleText || (typedText.length >= sampleText.length)) return;
+    if (endTime || !sampleText || (typedText.length >= sampleText.length)) return; // endTime check
+    if (!sessionActive && typedText.length === 0 && char.length > 0) { // Auto-start test on first OSK char input
+      startTest(); // This resets typedText, so we need to pass the char to the next input change
+      // Small delay to allow startTest to reset typedText before processing the first char
+      setTimeout(() => localHandleInputChange(char), 0);
+      return;
+    }
     const newTypedText = typedText + char;
     localHandleInputChange(newTypedText);
   };
 
   const handleOSKBackspace = () => {
-    if (endTime || !sampleText || typedText.length === 0) return;
+    if (endTime || !sampleText || typedText.length === 0) return; // endTime check
     const newTypedText = typedText.slice(0, -1);
     localHandleInputChange(newTypedText);
   };
 
   const handleOSKSpace = () => {
-    if (endTime || !sampleText || (typedText.length >= sampleText.length)) return;
+    if (endTime || !sampleText || (typedText.length >= sampleText.length)) return; // endTime check
+     if (!sessionActive && typedText.length === 0) { // Auto-start test on first OSK space input
+      startTest();
+      setTimeout(() => localHandleInputChange(' '), 0);
+      return;
+    }
     const newTypedText = typedText + ' ';
     localHandleInputChange(newTypedText);
   };
   
-  const isTestFinished = sampleText && typedText.length === sampleText.length && !sessionActive && stats.timeElapsed > 0;
+  const isTestFinished = !!endTime; // Use endTime to reliably determine if test is finished
 
   if (!isMounted || !i18nReady || !typingTestReady || !sampleText) {
     return (
@@ -232,13 +243,13 @@ export default function KeystrokeInsightsPage() {
                 <TypingInputArea
                   value={typedText}
                   onChange={localHandleInputChange}
-                  disabled={!!isTestFinished || useOnScreenKeyboard}
+                  disabled={isTestFinished || (useOnScreenKeyboard && sessionActive)}
                   readOnly={useOnScreenKeyboard}
                   inputRef={inputRef}
                   onFocus={handleInputFocus}
                   fontSize={fontSize}
                 />
-                {useOnScreenKeyboard && (
+                {useOnScreenKeyboard && !isTestFinished && (
                   <OnScreenKeyboard 
                     onChar={handleOSKChar}
                     onBackspace={handleOSKBackspace}
@@ -260,16 +271,16 @@ export default function KeystrokeInsightsPage() {
             keystrokeHistory={keystrokeHistory}
             errors={errors}
             sampleText={sampleText}
-            isFinished={!!isTestFinished}
+            isFinished={isTestFinished}
             onOpenSettings={() => setIsSettingsDialogOpen(true)}
           />
           
           {showErrorAnalysis && (isTestFinished || (errors.length > 0 && !sessionActive && stats.timeElapsed > 0)) && (
-            <ErrorAnalysisDisplay errors={errors} stats={stats} isFinished={!!isTestFinished} />
+            <ErrorAnalysisDisplay errors={errors} stats={stats} isFinished={isTestFinished} />
           )}
 
           {showKeystrokeHistory && (isTestFinished || (keystrokeHistory.length > 0 && !sessionActive && stats.timeElapsed > 0)) && (
-            <KeystrokeHistoryDisplay history={keystrokeHistory} isFinished={!!isTestFinished} />
+            <KeystrokeHistoryDisplay history={keystrokeHistory} isFinished={isTestFinished} />
           )}
           
         </div>
