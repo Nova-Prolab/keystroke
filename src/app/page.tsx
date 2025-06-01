@@ -43,6 +43,7 @@ export default function KeystrokeInsightsPage() {
   const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
   const { toast } = useToast();
   const [isMounted, setIsMounted] = useState(false);
+  const [minLoadingTimePassed, setMinLoadingTimePassed] = useState(false);
 
   // Settings State
   const [theme, setTheme] = useState<Theme>('light');
@@ -56,12 +57,16 @@ export default function KeystrokeInsightsPage() {
 
   useEffect(() => {
     setIsMounted(true);
+    const timer = setTimeout(() => {
+      setMinLoadingTimePassed(true);
+    }, 2000); // Minimum 2 seconds for the loading screen
+
     try {
       const context = new (window.AudioContext || (window as any).webkitAudioContext)();
       setAudioContext(context);
     } catch (e) {
       console.warn("AudioContext not supported or could not be initialized.", e);
-      if (i18nReady) {
+      if (i18nReady) { // Check i18nReady before toasting
         toast({
           title: t('audioWarningTitle'),
           description: t('audioWarningDesc'),
@@ -75,7 +80,7 @@ export default function KeystrokeInsightsPage() {
       setTheme(storedTheme);
       document.documentElement.classList.toggle('dark', storedTheme === 'dark');
     } else {
-      setTheme('light'); // Default to light theme
+      setTheme('light'); 
       document.documentElement.classList.toggle('dark', false);
       localStorage.setItem('theme', 'light');
     }
@@ -93,12 +98,13 @@ export default function KeystrokeInsightsPage() {
     if (storedUseOSK !== null) setUseOnScreenKeyboard(JSON.parse(storedUseOSK));
 
     return () => {
+      clearTimeout(timer);
       if (audioContext && audioContext.state !== 'closed') {
         audioContext.close().catch(err => console.warn("Failed to close AudioContext:", err));
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18nReady]);
+  }, [i18nReady]); // Added i18nReady to re-evaluate toast if it becomes ready later
 
   useEffect(() => {
     if (i18nReady) {
@@ -186,7 +192,6 @@ export default function KeystrokeInsightsPage() {
     }
   };
 
-  // On-Screen Keyboard Handlers
   const handleOSKChar = (char: string) => {
     if (endTime || !sampleText || (typedText.length >= sampleText.length)) return; 
     if (!sessionActive && typedText.length === 0 && char.length > 0) { 
@@ -276,8 +281,11 @@ export default function KeystrokeInsightsPage() {
   };
 
   const isTestFinished = !!endTime; 
+  
+  // Conditions for showing the loading screen
+  const isLoadingScreenVisible = !isMounted || !i18nReady || !typingTestReady || !sampleText || !minLoadingTimePassed;
 
-  if (!isMounted || !i18nReady || !typingTestReady || !sampleText) {
+  if (isLoadingScreenVisible) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-background text-foreground p-6 text-center">
         <div className="mb-8">
@@ -288,7 +296,7 @@ export default function KeystrokeInsightsPage() {
           <span className="text-accent">{i18nReady ? t('headerTitleAccent') : 'Insights'}</span>
         </h1>
         <p className="text-xl text-muted-foreground flex items-center justify-center">
-          <span>{i18nReady ? t('loading.preparingChallenge') : 'Loading challenge'}</span>
+          <span>{i18nReady ? t('loading.preparingChallenge') : 'Loading challenge...'}</span>
           <span className="inline-block ml-2">
             <span className="animate-ping inline-block h-2 w-2 bg-accent rounded-full"></span>
             <span className="animate-ping inline-block h-2 w-2 bg-accent rounded-full mx-1" style={{ animationDelay: '0.15s' }}></span>
@@ -388,3 +396,4 @@ export default function KeystrokeInsightsPage() {
     </>
   );
 }
+

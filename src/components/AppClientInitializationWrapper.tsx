@@ -21,14 +21,11 @@ export default function AppClientInitializationWrapper({ children }: { children:
   }, [locale, isInitialized, t]);
 
   if (!isInitialized) {
-     // Render a simple loading indicator while translations are being initialized.
-     // The main page structure (html, body) is already rendered by RootLayout.
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        Loading...
-      </div>
-    );
+    // Return null to prevent rendering children (like page.tsx) until i18n is ready.
+    // page.tsx will handle its own loading display once i18n isInitialized.
+    return null;
   }
 
   return <>{children}</>;
 }
+
