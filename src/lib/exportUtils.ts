@@ -23,7 +23,10 @@ export function exportTypingDataToCSV(
   sampleText: string,
   t: TFunction // Pass the translation function
 ): void {
+  const reportGeneratedOn = new Date().toLocaleString(t('localeForDate', {locale: 'en-US'})); // Use translated locale string for date formatting consistency if needed
+
   const generalStats = [{
+    [t('csvHeaders.reportGeneratedOn')]: reportGeneratedOn,
     [t('csvHeaders.wpm')]: stats.wpm,
     [t('csvHeaders.cpm')]: stats.cpm,
     [t('csvHeaders.wps')]: stats.wps,
@@ -54,7 +57,7 @@ export function exportTypingDataToCSV(
 ${t('csvHeaders.keystrokeHistory')}\n${keystrokesCSV}\n
 ${t('csvHeaders.errors')}\n${errorsCSV}`;
   
-  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-s8;' });
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' }); // Changed to utf-8 for better compatibility
   const link = document.createElement('a');
   if (link.download !== undefined) {
     const url = URL.createObjectURL(blob);
@@ -67,3 +70,4 @@ ${t('csvHeaders.errors')}\n${errorsCSV}`;
     URL.revokeObjectURL(url);
   }
 }
+

@@ -61,6 +61,7 @@
   "audioErrorDesc": "Could not enable sound. Click the input area and try again.",
   "csvHeaders": {
     "generalStats": "General Stats",
+    "reportGeneratedOn": "Report Generated On",
     "wpm": "WPM",
     "cpm": "CPM",
     "wps": "WPS",
@@ -76,5 +77,7 @@
     "expected": "Expected",
     "actual": "Actual",
     "index": "Index"
-  }
+  },
+  "localeForDate": "en-US"
 }
+

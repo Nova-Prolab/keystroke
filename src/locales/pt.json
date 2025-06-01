@@ -61,6 +61,7 @@
   "audioErrorDesc": "Não foi possível habilitar o som. Clique na área de entrada e tente novamente.",
   "csvHeaders": {
     "generalStats": "Estatísticas Gerais",
+    "reportGeneratedOn": "Relatório Gerado Em",
     "wpm": "PPM",
     "cpm": "CPM",
     "wps": "PPS",
@@ -76,5 +77,7 @@
     "expected": "Esperado",
     "actual": "Real",
     "index": "Índice"
-  }
+  },
+  "localeForDate": "pt-BR"
 }
+
