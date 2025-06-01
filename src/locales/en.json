@@ -29,17 +29,31 @@
     "exportFailedDesc": "There was an error exporting your data."
   },
   "errorAnalysis": {
-    "title": "Error Analysis",
-    "completeSessionPrompt": "Complete a typing session to see error analysis.",
+    "title": "Performance Analysis",
+    "completeSessionPrompt": "Complete a typing session to see your performance analysis.",
+    "overallAccuracyTitle": "Overall Accuracy",
     "overallAccuracyPrefix": "Overall Accuracy: ",
     "overallAccuracySuffix": "%",
-    "specificErrorsTitle": "Specific Errors:",
-    "errorEntryPart1": "Index {{index}}: Expected ",
+    "specificErrorsTitle": "Detailed Errors:",
+    "errorEntryPart1": "Idx {{index}}: Exp ",
     "errorEntryPart2": ", typed ",
     "spaceChar": "'space'",
-    "mostFrequentErrors": "Most Frequent Errors:",
+    "mostFrequentErrors": "Most Frequent Error Patterns:",
     "frequency": "Frequency",
-    "noErrors": "No errors made! Perfect run!"
+    "noErrors": "Flawless! No errors made.",
+    "wpmComparison": {
+      "yourWpm": "Your WPM: {{wpm}}",
+      "averageIsWPM": "Avg: {{avg}} WPM"
+    },
+    "cpmComparison": {
+      "yourCpm": "Your CPM: {{cpm}}",
+      "averageIsCPM": "Avg: {{avg}} CPM"
+    },
+    "comparison": {
+      "higher": "{{diff}} higher",
+      "lower": "{{diff}} lower",
+      "onPar": "on par"
+    }
   },
   "keystrokeLog": {
     "title": "Keystroke Log",
@@ -103,7 +117,7 @@
     },
     "display": {
       "title": "Display Options",
-      "showErrorAnalysis": "Show Error Analysis",
+      "showErrorAnalysis": "Show Performance Analysis",
       "showKeystrokeHistory": "Show Keystroke Log"
     },
     "closeButton": "Done"

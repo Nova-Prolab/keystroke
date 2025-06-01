@@ -29,17 +29,31 @@
     "exportFailedDesc": "Ocorreu um erro ao exportar seus dados."
   },
   "errorAnalysis": {
-    "title": "Análise de Erros",
-    "completeSessionPrompt": "Complete uma sessão de digitação para ver a análise de erros.",
+    "title": "Análise de Desempenho",
+    "completeSessionPrompt": "Complete uma sessão de digitação para ver sua análise de desempenho.",
+    "overallAccuracyTitle": "Precisão Geral",
     "overallAccuracyPrefix": "Precisão Geral: ",
     "overallAccuracySuffix": "%",
-    "specificErrorsTitle": "Erros Específicos:",
-    "errorEntryPart1": "Índice {{index}}: Esperado ",
+    "specificErrorsTitle": "Erros Detalhados:",
+    "errorEntryPart1": "Índ {{index}}: Esp ",
     "errorEntryPart2": ", digitado ",
     "spaceChar": "'espaço'",
-    "mostFrequentErrors": "Erros Mais Frequentes:",
+    "mostFrequentErrors": "Padrões de Erro Mais Frequentes:",
     "frequency": "Frequência",
-    "noErrors": "Sem erros! Execução perfeita!"
+    "noErrors": "Impecável! Nenhum erro cometido.",
+    "wpmComparison": {
+      "yourWpm": "Suas PPM: {{wpm}}",
+      "averageIsWPM": "Média: {{avg}} PPM"
+    },
+    "cpmComparison": {
+      "yourCpm": "Seus CPM: {{cpm}}",
+      "averageIsCPM": "Média: {{avg}} CPM"
+    },
+    "comparison": {
+      "higher": "{{diff}} mais alto",
+      "lower": "{{diff}} mais baixo",
+      "onPar": "no mesmo nível"
+    }
   },
   "keystrokeLog": {
     "title": "Registro de Teclas",
@@ -103,7 +117,7 @@
     },
     "display": {
       "title": "Opções de Exibição",
-      "showErrorAnalysis": "Mostrar Análise de Erros",
+      "showErrorAnalysis": "Mostrar Análise de Desempenho",
       "showKeystrokeHistory": "Mostrar Registro de Teclas"
     },
     "closeButton": "Feito"

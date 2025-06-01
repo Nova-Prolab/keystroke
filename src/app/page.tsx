@@ -42,7 +42,7 @@ export default function KeystrokeInsightsPage() {
   const [isMounted, setIsMounted] = useState(false);
 
   // Settings State
-  const [theme, setTheme] = useState<Theme>('light');
+  const [theme, setTheme] = useState<Theme>('light'); // Default to light
   const [fontSize, setFontSize] = useState<FontSize>('base');
   const [showErrorAnalysis, setShowErrorAnalysis] = useState<boolean>(true);
   const [showKeystrokeHistory, setShowKeystrokeHistory] = useState<boolean>(true);
@@ -70,11 +70,8 @@ export default function KeystrokeInsightsPage() {
       setTheme(storedTheme);
       document.documentElement.classList.toggle('dark', storedTheme === 'dark');
     } else {
-      // Default to system preference if no theme is stored
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const initialTheme = prefersDark ? 'dark' : 'light';
-      setTheme(initialTheme);
-      document.documentElement.classList.toggle('dark', initialTheme === 'dark');
+      // If no theme is stored, 'light' is already set as default state
+      document.documentElement.classList.toggle('dark', false);
     }
 
     const storedFontSize = localStorage.getItem('fontSize') as FontSize | null;
