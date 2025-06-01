@@ -32,11 +32,8 @@
     "title": "Análisis de Rendimiento",
     "completeSessionPrompt": "Completa una sesión de mecanografía para ver tu análisis de rendimiento.",
     "overallAccuracyTitle": "Precisión General",
-    "overallAccuracyPrefix": "Precisión General: ",
-    "overallAccuracySuffix": "%",
     "specificErrorsTitle": "Errores Detallados:",
-    "errorEntryPart1": "Índx {{index}}: Esp ",
-    "errorEntryPart2": ", tecleado ",
+    "errorDetail": "Carácter {{index}}: Escribiste {{actual}} en lugar de {{expected}}.",
     "spaceChar": "'espacio'",
     "mostFrequentErrors": "Patrones de Error Más Frecuentes:",
     "frequency": "Frecuencia",
@@ -96,7 +93,7 @@
   "localeForDate": "es-ES",
   "errorDisplay": {
     "toastTitle": "Error de Mecanografía",
-    "toastDescription": "En el carácter {{index}}: Esperado {{expected}}, escribiste {{actual}}."
+    "toastDescription": "Error en el carácter {{index}}: Escribiste {{actual}} en lugar de {{expected}}."
   },
   "settingsDialog": {
     "title": "Ajustes",

@@ -154,10 +154,11 @@ const ErrorAnalysisDisplay: React.FC<ErrorAnalysisDisplayProps> = ({ errors, sta
                     <li key={index} className="text-sm text-destructive-foreground bg-destructive/80 p-2 rounded-md font-mono flex items-center">
                       <AlertCircle className="h-4 w-4 mr-2 shrink-0" />
                       <span>
-                        {t('errorAnalysis.errorEntryPart1', { index: error.index + 1 })}
-                        <span className="font-bold">{error.expected === ' ' ? t('errorAnalysis.spaceChar') : `'${error.expected}'`}</span>
-                        {t('errorAnalysis.errorEntryPart2')}
-                        <span className="font-bold">{error.actual === ' ' ? t('errorAnalysis.spaceChar') : `'${error.actual}'`}</span>
+                        {t('errorAnalysis.errorDetail', {
+                          index: error.index + 1,
+                          actual: error.actual === ' ' ? t('errorAnalysis.spaceChar') : `'${error.actual}'`,
+                          expected: error.expected === ' ' ? t('errorAnalysis.spaceChar') : `'${error.expected}'`,
+                        })}
                       </span>
                     </li>
                   ))}

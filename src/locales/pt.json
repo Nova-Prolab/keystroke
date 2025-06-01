@@ -32,11 +32,8 @@
     "title": "Análise de Desempenho",
     "completeSessionPrompt": "Complete uma sessão de digitação para ver sua análise de desempenho.",
     "overallAccuracyTitle": "Precisão Geral",
-    "overallAccuracyPrefix": "Precisão Geral: ",
-    "overallAccuracySuffix": "%",
     "specificErrorsTitle": "Erros Detalhados:",
-    "errorEntryPart1": "Índ {{index}}: Esp ",
-    "errorEntryPart2": ", digitado ",
+    "errorDetail": "Caractere {{index}}: Você digitou {{actual}} em vez de {{expected}}.",
     "spaceChar": "'espaço'",
     "mostFrequentErrors": "Padrões de Erro Mais Frequentes:",
     "frequency": "Frequência",
@@ -96,7 +93,7 @@
   "localeForDate": "pt-BR",
   "errorDisplay": {
     "toastTitle": "Erro de Digitação",
-    "toastDescription": "No caractere {{index}}: Esperado {{expected}}, você digitou {{actual}}."
+    "toastDescription": "Erro no caractere {{index}}: Você digitou {{actual}} em vez de {{expected}}."
   },
   "settingsDialog": {
     "title": "Configurações",

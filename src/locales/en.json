@@ -32,11 +32,8 @@
     "title": "Performance Analysis",
     "completeSessionPrompt": "Complete a typing session to see your performance analysis.",
     "overallAccuracyTitle": "Overall Accuracy",
-    "overallAccuracyPrefix": "Overall Accuracy: ",
-    "overallAccuracySuffix": "%",
     "specificErrorsTitle": "Detailed Errors:",
-    "errorEntryPart1": "Idx {{index}}: Exp ",
-    "errorEntryPart2": ", typed ",
+    "errorDetail": "Char {{index}}: Typed {{actual}} instead of {{expected}}.",
     "spaceChar": "'space'",
     "mostFrequentErrors": "Most Frequent Error Patterns:",
     "frequency": "Frequency",
@@ -96,7 +93,7 @@
   "localeForDate": "en-US",
   "errorDisplay": {
     "toastTitle": "Typing Mistake",
-    "toastDescription": "At character {{index}}: Expected {{expected}}, you typed {{actual}}."
+    "toastDescription": "Mistake at character {{index}}: You typed {{actual}} instead of {{expected}}."
   },
   "settingsDialog": {
     "title": "Settings",

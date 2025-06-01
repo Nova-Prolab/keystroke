@@ -21,19 +21,22 @@ const SampleTextDisplay: React.FC<SampleTextDisplayProps> = ({ formattedText, fo
   const handleErrorClick = (expectedChar: string, actualChar: string | undefined, index: number) => {
     if (actualChar === undefined) return; 
 
+    const displayExpected = expectedChar === ' ' ? t('errorAnalysis.spaceChar') : `'${expectedChar}'`;
+    const displayActual = actualChar === ' ' ? t('errorAnalysis.spaceChar') : `'${actualChar}'`;
+
     toast({
       title: t('errorDisplay.toastTitle'),
       description: t('errorDisplay.toastDescription', {
         index: index + 1, 
-        expected: expectedChar === ' ' ? t('errorAnalysis.spaceChar') : `'${expectedChar}'`,
-        actual: actualChar === ' ' ? t('errorAnalysis.spaceChar') : `'${actualChar}'`
+        expected: displayExpected,
+        actual: displayActual
       }),
       variant: "destructive"
     });
   };
 
   const fontSizeClasses: Record<FontSize, string> = {
-    sm: 'text-lg md:text-xl', // Adjusted for better differentiation, base was text-xl
+    sm: 'text-lg md:text-xl',
     base: 'text-xl md:text-2xl',
     lg: 'text-2xl md:text-3xl',
   };
