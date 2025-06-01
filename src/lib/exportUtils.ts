@@ -1,6 +1,9 @@
 
 import type { TypingStats, Keystroke, ErrorRecord } from '@/hooks/use-typing-test';
 
+// Define a type for the translation function
+type TFunction = (key: string, params?: Record<string, string | number>) => string;
+
 function convertToCSV(data: any[]): string {
   if (data.length === 0) return "";
   const headers = Object.keys(data[0]);
@@ -17,22 +20,39 @@ export function exportTypingDataToCSV(
   stats: TypingStats,
   keystrokeHistory: Keystroke[],
   errors: ErrorRecord[],
-  sampleText: string
+  sampleText: string,
+  t: TFunction // Pass the translation function
 ): void {
   const generalStats = [{
-    WPM: stats.wpm,
-    CPM: stats.cpm,
-    WPS: stats.wps,
-    Accuracy: `${stats.accuracy}%`,
-    TimeElapsedSeconds: stats.timeElapsed,
-    SampleText: sampleText.replace(/,/g, ';'), // Avoid comma in sample text for CSV
+    [t('csvHeaders.wpm')]: stats.wpm,
+    [t('csvHeaders.cpm')]: stats.cpm,
+    [t('csvHeaders.wps')]: stats.wps,
+    [t('csvHeaders.accuracy')]: `${stats.accuracy}%`,
+    [t('csvHeaders.timeElapsed')]: stats.timeElapsed,
+    [t('csvHeaders.sampleText')]: sampleText.replace(/,/g, ';'), 
   }];
 
-  const keystrokesCSV = convertToCSV(keystrokeHistory.map(k => ({ ...k, timestamp: new Date(k.timestamp).toISOString() })));
-  const errorsCSV = convertToCSV(errors);
+  const keystrokesFormatted = keystrokeHistory.map(k => ({ 
+    [t('csvHeaders.char')]: k.char,
+    [t('csvHeaders.inputChar')]: k.inputChar,
+    [t('csvHeaders.status')]: t(`keystrokeLog.statusValues.${k.status}` as const, k.status),
+    [t('csvHeaders.timestamp')]: new Date(k.timestamp).toISOString() 
+  }));
+
+  const errorsFormatted = errors.map(e => ({
+    [t('csvHeaders.expected')]: e.expected,
+    [t('csvHeaders.actual')]: e.actual,
+    [t('csvHeaders.index')]: e.index,
+  }));
+
+  const keystrokesCSV = convertToCSV(keystrokesFormatted);
+  const errorsCSV = convertToCSV(errorsFormatted);
   const generalStatsCSV = convertToCSV(generalStats);
 
-  const csvContent = `General Stats\n${generalStatsCSV}\n\nKeystroke History\n${keystrokesCSV}\n\nErrors\n${errorsCSV}`;
+  const csvContent = 
+`${t('csvHeaders.generalStats')}\n${generalStatsCSV}\n
+${t('csvHeaders.keystrokeHistory')}\n${keystrokesCSV}\n
+${t('csvHeaders.errors')}\n${errorsCSV}`;
   
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-s8;' });
   const link = document.createElement('a');

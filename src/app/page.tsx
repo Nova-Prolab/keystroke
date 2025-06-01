@@ -13,9 +13,11 @@ import KeystrokeHistoryDisplay from '@/components/keystroke-app/KeystrokeHistory
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Keyboard } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
+import { useI18n } from '@/contexts/i18nContext';
 
 
 export default function KeystrokeInsightsPage() {
+  const { t, isInitialized: i18nReady } = useI18n();
   const {
     sampleText,
     typedText,
@@ -28,6 +30,7 @@ export default function KeystrokeInsightsPage() {
     resetTest,
     startTest,
     formattedSampleText,
+    isReady: typingTestReady,
   } = useTypingTest();
 
   const [soundEnabled, setSoundEnabled] = useState<boolean>(false);
@@ -42,11 +45,13 @@ export default function KeystrokeInsightsPage() {
       setAudioContext(context);
     } catch (e) {
       console.warn("AudioContext not supported or could not be initialized.", e);
-      toast({
-        title: "Audio Warning",
-        description: "Keystroke sounds may not be available.",
-        variant: "destructive"
-      });
+      if (i18nReady) { // Ensure t is available
+        toast({
+          title: t('audioWarningTitle'),
+          description: t('audioWarningDesc'),
+          variant: "destructive"
+        });
+      }
     }
     return () => {
       if (audioContext && audioContext.state !== 'closed') {
@@ -54,7 +59,13 @@ export default function KeystrokeInsightsPage() {
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); 
+  }, [i18nReady]); // Add t to deps if used directly in effect, or check i18nReady
+
+  useEffect(() => {
+    if (i18nReady) {
+      document.title = t('pageTitle');
+    }
+  }, [i18nReady, t]);
 
   const playKeystrokeSound = useCallback(() => {
     if (soundEnabled && audioContext && audioContext.state === 'running') {
@@ -64,7 +75,7 @@ export default function KeystrokeInsightsPage() {
 
         oscillator.type = 'sine'; 
         oscillator.frequency.setValueAtTime(660, audioContext.currentTime); 
-        gainNode.gain.setValueAtTime(0.05, audioContext.currentTime); // Reduced volume
+        gainNode.gain.setValueAtTime(0.05, audioContext.currentTime); 
 
         oscillator.connect(gainNode);
         gainNode.connect(audioContext.destination);
@@ -78,6 +89,7 @@ export default function KeystrokeInsightsPage() {
   }, [soundEnabled, audioContext]);
 
   const handleLocalInputChange = (value: string) => {
+    if (!sampleText) return; // Don't handle input if sampleText isn't loaded
     handleInputChange(value);
     if (sessionActive || (!sessionActive && value.length > 0 && value.length < sampleText.length)) { 
       playKeystrokeSound();
@@ -89,11 +101,13 @@ export default function KeystrokeInsightsPage() {
     if (enabled && audioContext && audioContext.state === 'suspended') {
       audioContext.resume().catch(err => {
         console.error("Failed to resume AudioContext:", err);
-        toast({
-          title: "Audio Error",
-          description: "Could not enable sound. Click the input area and try again.",
-          variant: "destructive"
-        });
+        if (i18nReady) {
+          toast({
+            title: t('audioErrorTitle'),
+            description: t('audioErrorDesc'),
+            variant: "destructive"
+          });
+        }
       });
     }
   };
@@ -104,9 +118,9 @@ export default function KeystrokeInsightsPage() {
     }
   };
   
-  const isTestFinished = typedText.length === sampleText.length && !sessionActive && stats.timeElapsed > 0;
+  const isTestFinished = sampleText && typedText.length === sampleText.length && !sessionActive && stats.timeElapsed > 0;
 
-  if (!isMounted) {
+  if (!isMounted || !i18nReady || !typingTestReady || !sampleText) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-background">
         <Keyboard className="h-16 w-16 animate-pulse text-primary" />
@@ -120,22 +134,22 @@ export default function KeystrokeInsightsPage() {
         <header className="mb-10 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-primary flex items-center justify-center">
             <Keyboard className="mr-3 h-10 w-10 md:h-12 md:w-12 text-accent" />
-            Keystroke <span className="text-accent">Insights</span>
+            {t('headerTitleStart')}<span className="text-accent">{t('headerTitleAccent')}</span>
           </h1>
-          <p className="text-md md:text-lg text-muted-foreground mt-2">Analyze and improve your typing prowess.</p>
+          <p className="text-md md:text-lg text-muted-foreground mt-2">{t('headerSubtitle')}</p>
         </header>
 
         <div className="w-full max-w-4xl space-y-6">
           <Card className="shadow-xl overflow-hidden bg-card">
             <CardHeader>
-                <CardTitle className="text-2xl font-semibold text-primary">Typing Challenge</CardTitle>
+                <CardTitle className="text-2xl font-semibold text-primary">{t('typingChallengeCardTitle')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
                 <SampleTextDisplay formattedText={formattedSampleText} />
                 <TypingInputArea
                   value={typedText}
                   onChange={handleLocalInputChange}
-                  disabled={isTestFinished}
+                  disabled={!!isTestFinished} // Ensure boolean
                   inputRef={inputRef}
                   onFocus={handleInputFocus}
                 />
@@ -154,20 +168,20 @@ export default function KeystrokeInsightsPage() {
             keystrokeHistory={keystrokeHistory}
             errors={errors}
             sampleText={sampleText}
-            isFinished={isTestFinished}
+            isFinished={!!isTestFinished} // Ensure boolean
           />
           
           {(isTestFinished || (errors.length > 0 && !sessionActive && stats.timeElapsed > 0)) && (
-            <ErrorAnalysisDisplay errors={errors} stats={stats} isFinished={isTestFinished} />
+            <ErrorAnalysisDisplay errors={errors} stats={stats} isFinished={!!isTestFinished} />
           )}
 
           {(isTestFinished || (keystrokeHistory.length > 0 && !sessionActive && stats.timeElapsed > 0)) && (
-            <KeystrokeHistoryDisplay history={keystrokeHistory} isFinished={isTestFinished} />
+            <KeystrokeHistoryDisplay history={keystrokeHistory} isFinished={!!isTestFinished} />
           )}
           
         </div>
         <footer className="mt-12 text-center text-sm text-muted-foreground py-4">
-            <p>&copy; {new Date().getFullYear()} Keystroke Insights. Crafted for speed and precision.</p>
+            <p>{t('footerText', { year: new Date().getFullYear() })}</p>
         </footer>
       </main>
     </>

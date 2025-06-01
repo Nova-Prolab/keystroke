@@ -1,0 +1,80 @@
+
+{
+  "pageTitle": "Keystroke Insights",
+  "pageDescription": "Analyze your typing speed and accuracy.",
+  "headerTitleStart": "Keystroke ",
+  "headerTitleAccent": "Insights",
+  "headerSubtitle": "Analyze and improve your typing prowess.",
+  "typingChallengeCardTitle": "Typing Challenge",
+  "typingInputPlaceholder": "Start typing here...",
+  "typingInputAriaLabel": "Typing input area",
+  "sampleTextAriaLabel": "Sample text to type",
+  "stats": {
+    "wpm": "WPM",
+    "cpm": "CPM",
+    "accuracy": "Accuracy",
+    "time": "Time"
+  },
+  "controls": {
+    "startTest": "Start Test",
+    "reset": "Reset",
+    "sound": "Sound",
+    "exportCsv": "Export CSV",
+    "noDataToExportTitle": "No Data to Export",
+    "noDataToExportDesc": "Please complete a typing session to export data.",
+    "exportSuccessfulTitle": "Export Successful",
+    "exportSuccessfulDesc": "Your typing data has been exported as a CSV file.",
+    "exportFailedTitle": "Export Failed",
+    "exportFailedDesc": "There was an error exporting your data."
+  },
+  "errorAnalysis": {
+    "title": "Error Analysis",
+    "completeSessionPrompt": "Complete a typing session to see error analysis.",
+    "overallAccuracyPrefix": "Overall Accuracy: ",
+    "overallAccuracySuffix": "%",
+    "specificErrorsTitle": "Specific Errors:",
+    "errorEntryPart1": "Index {{index}}: Expected ",
+    "errorEntryPart2": ", typed ",
+    "spaceChar": "'space'",
+    "mostFrequentErrors": "Most Frequent Errors:",
+    "frequency": "Frequency",
+    "noErrors": "No errors made! Perfect run!"
+  },
+  "keystrokeLog": {
+    "title": "Keystroke Log",
+    "completeSessionPrompt": "Complete a typing session to see the keystroke log.",
+    "expectedHeader": "Expected",
+    "typedHeader": "Typed",
+    "statusHeader": "Status",
+    "timestampHeader": "Timestamp",
+    "statusValues": {
+        "correct": "correct",
+        "incorrect": "incorrect",
+        "corrected": "corrected"
+    },
+    "noKeystrokes": "No keystrokes recorded yet."
+  },
+  "footerText": "&copy; {{year}} Keystroke Insights. Crafted for speed and precision.",
+  "audioWarningTitle": "Audio Warning",
+  "audioWarningDesc": "Keystroke sounds may not be available.",
+  "audioErrorTitle": "Audio Error",
+  "audioErrorDesc": "Could not enable sound. Click the input area and try again.",
+  "csvHeaders": {
+    "generalStats": "General Stats",
+    "wpm": "WPM",
+    "cpm": "CPM",
+    "wps": "WPS",
+    "accuracy": "Accuracy",
+    "timeElapsed": "TimeElapsedSeconds",
+    "sampleText": "SampleText",
+    "keystrokeHistory": "Keystroke History",
+    "char": "ExpectedChar",
+    "inputChar": "TypedChar",
+    "status": "Status",
+    "timestamp": "Timestamp",
+    "errors": "Errors",
+    "expected": "Expected",
+    "actual": "Actual",
+    "index": "Index"
+  }
+}

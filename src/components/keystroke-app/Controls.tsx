@@ -6,11 +6,11 @@ import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
-import { cn } from '@/lib/utils';
 import { Download, Play, RefreshCcw, Volume2, VolumeX } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import type { TypingStats, Keystroke, ErrorRecord } from '@/hooks/use-typing-test';
 import { exportTypingDataToCSV } from '@/lib/exportUtils';
+import { useI18n } from '@/contexts/i18nContext';
 
 interface ControlsProps {
   onStart: () => void;
@@ -37,27 +37,28 @@ const Controls: React.FC<ControlsProps> = ({
   sampleText,
   isFinished
 }) => {
+  const { t } = useI18n();
   const { toast } = useToast();
 
   const handleExport = () => {
     if (keystrokeHistory.length === 0 && errors.length === 0 && stats.wpm === 0) {
       toast({
-        title: "No Data to Export",
-        description: "Please complete a typing session to export data.",
+        title: t('controls.noDataToExportTitle'),
+        description: t('controls.noDataToExportDesc'),
         variant: "destructive",
       });
       return;
     }
     try {
-      exportTypingDataToCSV(stats, keystrokeHistory, errors, sampleText);
+      exportTypingDataToCSV(stats, keystrokeHistory, errors, sampleText, t); // Pass t function
       toast({
-        title: "Export Successful",
-        description: "Your typing data has been exported as a CSV file.",
+        title: t('controls.exportSuccessfulTitle'),
+        description: t('controls.exportSuccessfulDesc'),
       });
     } catch (error) {
       toast({
-        title: "Export Failed",
-        description: "There was an error exporting your data.",
+        title: t('controls.exportFailedTitle'),
+        description: t('controls.exportFailedDesc'),
         variant: "destructive",
       });
       console.error("Export failed:", error);
@@ -70,12 +71,12 @@ const Controls: React.FC<ControlsProps> = ({
         <div className="flex gap-2">
           {!sessionActive && !isFinished && (
             <Button onClick={onStart} className="bg-primary hover:bg-primary/90 text-primary-foreground">
-              <Play className="mr-2 h-5 w-5" /> Start Test
+              <Play className="mr-2 h-5 w-5" /> {t('controls.startTest')}
             </Button>
           )}
           {(sessionActive || isFinished) && (
             <Button onClick={onReset} variant="outline">
-              <RefreshCcw className="mr-2 h-5 w-5" /> Reset
+              <RefreshCcw className="mr-2 h-5 w-5" /> {t('controls.reset')}
             </Button>
           )}
         </div>
@@ -85,16 +86,16 @@ const Controls: React.FC<ControlsProps> = ({
             id="sound-toggle" 
             checked={soundEnabled} 
             onCheckedChange={onSoundToggle}
-            aria-label="Toggle sound effects"
+            aria-label={t('controls.sound')}
           />
           <Label htmlFor="sound-toggle" className="flex items-center cursor-pointer text-sm">
             {soundEnabled ? <Volume2 className="mr-2 h-5 w-5 text-accent" /> : <VolumeX className="mr-2 h-5 w-5 text-muted-foreground" />}
-            Sound
+            {t('controls.sound')}
           </Label>
         </div>
 
         <Button onClick={handleExport} variant="secondary">
-          <Download className="mr-2 h-5 w-5" /> Export CSV
+          <Download className="mr-2 h-5 w-5" /> {t('controls.exportCsv')}
         </Button>
       </CardContent>
     </Card>

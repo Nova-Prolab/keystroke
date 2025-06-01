@@ -7,6 +7,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import type { Keystroke } from '@/hooks/use-typing-test';
 import { History } from 'lucide-react';
+import { useI18n } from '@/contexts/i18nContext';
 
 interface KeystrokeHistoryDisplayProps {
   history: Keystroke[];
@@ -14,16 +15,18 @@ interface KeystrokeHistoryDisplayProps {
 }
 
 const KeystrokeHistoryDisplay: React.FC<KeystrokeHistoryDisplayProps> = ({ history, isFinished }) => {
+  const { t } = useI18n();
+
   if (!isFinished && history.length === 0) {
     return (
        <Card className="mt-6 shadow-sm bg-card">
         <CardHeader>
           <CardTitle className="flex items-center text-lg font-semibold text-primary">
-             <History className="mr-2 h-6 w-6 text-accent" /> Keystroke Log
+             <History className="mr-2 h-6 w-6 text-accent" /> {t('keystrokeLog.title')}
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">Complete a typing session to see the keystroke log.</p>
+          <p className="text-muted-foreground">{t('keystrokeLog.completeSessionPrompt')}</p>
         </CardContent>
       </Card>
     );
@@ -33,7 +36,7 @@ const KeystrokeHistoryDisplay: React.FC<KeystrokeHistoryDisplayProps> = ({ histo
     <Card className="mt-6 shadow-lg bg-card">
       <CardHeader>
         <CardTitle className="flex items-center text-lg font-semibold text-primary">
-           <History className="mr-2 h-6 w-6 text-accent" /> Keystroke Log
+           <History className="mr-2 h-6 w-6 text-accent" /> {t('keystrokeLog.title')}
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -42,24 +45,24 @@ const KeystrokeHistoryDisplay: React.FC<KeystrokeHistoryDisplayProps> = ({ histo
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Expected</TableHead>
-                <TableHead>Typed</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Timestamp</TableHead>
+                <TableHead>{t('keystrokeLog.expectedHeader')}</TableHead>
+                <TableHead>{t('keystrokeLog.typedHeader')}</TableHead>
+                <TableHead>{t('keystrokeLog.statusHeader')}</TableHead>
+                <TableHead>{t('keystrokeLog.timestampHeader')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {history.map((k, index) => (
                 <TableRow key={index} className={k.status === 'incorrect' ? 'bg-destructive/10 hover:bg-destructive/20' : 'hover:bg-muted/50'}>
-                  <TableCell className="font-mono">{k.char === ' ' ? "'space'" : k.char}</TableCell>
-                  <TableCell className="font-mono">{k.inputChar === ' ' ? "'space'" : k.inputChar}</TableCell>
+                  <TableCell className="font-mono">{k.char === ' ' ? t('errorAnalysis.spaceChar') : k.char}</TableCell>
+                  <TableCell className="font-mono">{k.inputChar === ' ' ? t('errorAnalysis.spaceChar') : k.inputChar}</TableCell>
                   <TableCell>
                     <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
                       k.status === 'correct' ? 'bg-green-500/20 text-green-700 dark:text-green-400' : 
                       k.status === 'incorrect' ? 'bg-red-500/20 text-red-700 dark:text-red-400' :
-                      'bg-yellow-500/20 text-yellow-700 dark:text-yellow-400' // for 'corrected' status if added
+                      'bg-yellow-500/20 text-yellow-700 dark:text-yellow-400'
                     }`}>
-                      {k.status}
+                      {t(`keystrokeLog.statusValues.${k.status}` as const, k.status)}
                     </span>
                   </TableCell>
                   <TableCell>{new Date(k.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', fractionalSecondDigits: 3 })}</TableCell>
@@ -69,7 +72,7 @@ const KeystrokeHistoryDisplay: React.FC<KeystrokeHistoryDisplayProps> = ({ histo
           </Table>
         </ScrollArea>
         ) : (
-          <p className="text-muted-foreground">No keystrokes recorded yet.</p>
+          <p className="text-muted-foreground">{t('keystrokeLog.noKeystrokes')}</p>
         )}
       </CardContent>
     </Card>

@@ -1,0 +1,80 @@
+
+{
+  "pageTitle": "Keystroke Insights",
+  "pageDescription": "Analise sua velocidade e precisão de digitação.",
+  "headerTitleStart": "Keystroke ",
+  "headerTitleAccent": "Insights",
+  "headerSubtitle": "Analise e melhore sua habilidade de digitação.",
+  "typingChallengeCardTitle": "Desafio de Digitação",
+  "typingInputPlaceholder": "Comece a digitar aqui...",
+  "typingInputAriaLabel": "Área de entrada de digitação",
+  "sampleTextAriaLabel": "Texto de amostra para digitar",
+  "stats": {
+    "wpm": "PPM",
+    "cpm": "CPM",
+    "accuracy": "Precisão",
+    "time": "Tempo"
+  },
+  "controls": {
+    "startTest": "Iniciar Teste",
+    "reset": "Reiniciar",
+    "sound": "Som",
+    "exportCsv": "Exportar CSV",
+    "noDataToExportTitle": "Sem Dados para Exportar",
+    "noDataToExportDesc": "Por favor, complete uma sessão de digitação para exportar dados.",
+    "exportSuccessfulTitle": "Exportação Bem-sucedida",
+    "exportSuccessfulDesc": "Seus dados de digitação foram exportados como um arquivo CSV.",
+    "exportFailedTitle": "Falha na Exportação",
+    "exportFailedDesc": "Ocorreu um erro ao exportar seus dados."
+  },
+  "errorAnalysis": {
+    "title": "Análise de Erros",
+    "completeSessionPrompt": "Complete uma sessão de digitação para ver a análise de erros.",
+    "overallAccuracyPrefix": "Precisão Geral: ",
+    "overallAccuracySuffix": "%",
+    "specificErrorsTitle": "Erros Específicos:",
+    "errorEntryPart1": "Índice {{index}}: Esperado ",
+    "errorEntryPart2": ", digitado ",
+    "spaceChar": "'espaço'",
+    "mostFrequentErrors": "Erros Mais Frequentes:",
+    "frequency": "Frequência",
+    "noErrors": "Sem erros! Execução perfeita!"
+  },
+  "keystrokeLog": {
+    "title": "Registro de Teclas",
+    "completeSessionPrompt": "Complete uma sessão de digitação para ver o registro de teclas.",
+    "expectedHeader": "Esperado",
+    "typedHeader": "Digitado",
+    "statusHeader": "Status",
+    "timestampHeader": "Timestamp",
+    "statusValues": {
+        "correct": "correto",
+        "incorrect": "incorreto",
+        "corrected": "corrigido"
+    },
+    "noKeystrokes": "Nenhuma tecla registrada ainda."
+  },
+  "footerText": "&copy; {{year}} Keystroke Insights. Criado para velocidade e precisão.",
+  "audioWarningTitle": "Aviso de Áudio",
+  "audioWarningDesc": "Os sons das teclas podem não estar disponíveis.",
+  "audioErrorTitle": "Erro de Áudio",
+  "audioErrorDesc": "Não foi possível habilitar o som. Clique na área de entrada e tente novamente.",
+  "csvHeaders": {
+    "generalStats": "Estatísticas Gerais",
+    "wpm": "PPM",
+    "cpm": "CPM",
+    "wps": "PPS",
+    "accuracy": "Precisão",
+    "timeElapsed": "TempoDecorridoSegundos",
+    "sampleText": "TextoDeAmostra",
+    "keystrokeHistory": "Histórico de Teclas",
+    "char": "CaractereEsperado",
+    "inputChar": "CaractereDigitado",
+    "status": "Status",
+    "timestamp": "Timestamp",
+    "errors": "Erros",
+    "expected": "Esperado",
+    "actual": "Real",
+    "index": "Índice"
+  }
+}

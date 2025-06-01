@@ -1,0 +1,80 @@
+
+{
+  "pageTitle": "Keystroke Insights",
+  "pageDescription": "Analiza tu velocidad y precisión al teclear.",
+  "headerTitleStart": "Keystroke ",
+  "headerTitleAccent": "Insights",
+  "headerSubtitle": "Analiza y mejora tu destreza al teclear.",
+  "typingChallengeCardTitle": "Desafío de Mecanografía",
+  "typingInputPlaceholder": "Comienza a escribir aquí...",
+  "typingInputAriaLabel": "Área de entrada de texto",
+  "sampleTextAriaLabel": "Texto de ejemplo para teclear",
+  "stats": {
+    "wpm": "PPM",
+    "cpm": "CPM",
+    "accuracy": "Precisión",
+    "time": "Tiempo"
+  },
+  "controls": {
+    "startTest": "Iniciar Prueba",
+    "reset": "Reiniciar",
+    "sound": "Sonido",
+    "exportCsv": "Exportar CSV",
+    "noDataToExportTitle": "Sin Datos para Exportar",
+    "noDataToExportDesc": "Por favor, completa una sesión de mecanografía para exportar datos.",
+    "exportSuccessfulTitle": "Exportación Exitosa",
+    "exportSuccessfulDesc": "Tus datos de mecanografía han sido exportados como un archivo CSV.",
+    "exportFailedTitle": "Exportación Fallida",
+    "exportFailedDesc": "Hubo un error al exportar tus datos."
+  },
+  "errorAnalysis": {
+    "title": "Análisis de Errores",
+    "completeSessionPrompt": "Completa una sesión de mecanografía para ver el análisis de errores.",
+    "overallAccuracyPrefix": "Precisión General: ",
+    "overallAccuracySuffix": "%",
+    "specificErrorsTitle": "Errores Específicos:",
+    "errorEntryPart1": "Índice {{index}}: Esperado ",
+    "errorEntryPart2": ", tecleado ",
+    "spaceChar": "'espacio'",
+    "mostFrequentErrors": "Errores Más Frecuentes:",
+    "frequency": "Frecuencia",
+    "noErrors": "¡Sin errores! ¡Prueba perfecta!"
+  },
+  "keystrokeLog": {
+    "title": "Registro de Teclas",
+    "completeSessionPrompt": "Completa una sesión de mecanografía para ver el registro de teclas.",
+    "expectedHeader": "Esperado",
+    "typedHeader": "Tecleado",
+    "statusHeader": "Estado",
+    "timestampHeader": "Marca de Tiempo",
+    "statusValues": {
+        "correct": "correcto",
+        "incorrect": "incorrecto",
+        "corrected": "corregido"
+    },
+    "noKeystrokes": "Aún no se han registrado pulsaciones de teclas."
+  },
+  "footerText": "&copy; {{year}} Keystroke Insights. Diseñado para velocidad y precisión.",
+  "audioWarningTitle": "Advertencia de Audio",
+  "audioWarningDesc": "Es posible que los sonidos de las teclas no estén disponibles.",
+  "audioErrorTitle": "Error de Audio",
+  "audioErrorDesc": "No se pudo habilitar el sonido. Haz clic en el área de entrada e inténtalo de nuevo.",
+  "csvHeaders": {
+    "generalStats": "Estadísticas Generales",
+    "wpm": "PPM",
+    "cpm": "CPM",
+    "wps": "PPS",
+    "accuracy": "Precisión",
+    "timeElapsed": "TiempoTranscurridoSegundos",
+    "sampleText": "TextoDeMuestra",
+    "keystrokeHistory": "Historial de Pulsaciones",
+    "char": "CaracterEsperado",
+    "inputChar": "CaracterTecleado",
+    "status": "Estado",
+    "timestamp": "MarcaDeTiempo",
+    "errors": "Errores",
+    "expected": "Esperado",
+    "actual": "Real",
+    "index": "Índice"
+  }
+}
