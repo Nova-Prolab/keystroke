@@ -1,7 +1,7 @@
 
 "use client";
 
-import type React from 'react';
+import React from 'react'; // Added React import
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Delete, CornerLeftUp, ArrowUpWideNarrow } from 'lucide-react'; // Icons
