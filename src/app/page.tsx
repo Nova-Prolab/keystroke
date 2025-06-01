@@ -389,7 +389,7 @@ export default function KeystrokeInsightsPage() {
         onClose={() => setIsSettingsDialogOpen(false)}
         currentTheme={theme}
         onThemeChange={handleThemeChange}
-        currentFontSize={currentFontSize}
+        currentFontSize={fontSize}
         onFontSizeChange={handleFontSizeChange}
         showErrorAnalysis={showErrorAnalysis}
         onShowErrorAnalysisChange={handleShowErrorAnalysisChange}
@@ -401,4 +401,3 @@ export default function KeystrokeInsightsPage() {
     </>
   );
 }
-
